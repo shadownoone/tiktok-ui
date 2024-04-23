@@ -1,0 +1,33 @@
+.caption {
+    text-align: center;
+    margin: 48px 0 84px;
+    // position: absolute;
+    // width: 75%;
+    // left: 12.5%;
+    // right: 0;
+    .content {
+        word-break: keep-all;
+        font-size: 1.8rem;
+
+        .sub-title {
+            color: #111111;
+
+            font-size: 1.8rem;
+        }
+
+        .title {
+            font-size: 7rem;
+            text-transform: uppercase;
+        }
+
+        .desc {
+            color: #111111;
+        }
+        .cta-container {
+            margin-top: 24px;
+            :hover {
+                background: #7e7e7e;
+            }
+        }
+    }
+}

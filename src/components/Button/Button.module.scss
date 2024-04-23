@@ -1,0 +1,31 @@
+.wrapper {
+    z-index: 1;
+    cursor: pointer;
+    margin: 6px 6px 0px 6px;
+    padding: 6px 16px;
+    max-width: 100%;
+    color: #ffffff;
+    border-radius: 30px;
+    background: #111111;
+}
+.primary {
+    color: #ffffff;
+    border-radius: 30px;
+    background: #111111;
+}
+
+.featured {
+    background: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    font-weight: 500;
+    border-bottom: 1.5px solid #111111;
+    box-shadow: inset 0 -1px 0 0 #111111;
+
+    &:hover {
+        color: #707072;
+        border-bottom: 1.5px solid #707072;
+        box-shadow: inset 0 -1px 0 0 #707072;
+    }
+}

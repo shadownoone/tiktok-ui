@@ -1,0 +1,51 @@
+.menu-item {
+    padding: 12px 14px 18px;
+    list-style: none;
+    font-weight: 500;
+
+    a {
+        text-decoration: none;
+        color: #111;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // Modifier class cho việc hiển thị MenuNotification
+    &.show-notification {
+        .menu-notification {
+            display: block;
+        }
+    }
+}
+.custom-class {
+    font-size: 1.6rem;
+    padding: 0 12px;
+}
+
+.menu-notification {
+    display: none; // Ẩn MenuNotification mặc định
+    &.show-notification {
+        display: flex;
+        justify-content: space-evenly;
+
+        .sub-menu {
+            padding: 50px 0px 0px;
+            flex: 1 0 25%; /* Mỗi sub-menu chiếm 25% chiều rộng trên mỗi hàng */
+            max-width: calc(25% - 20px); /* Sử dụng max-width để tránh tràn ra ngoài */
+            margin: 0 10px; /* Tạo khoảng cách giữa các sub-menu */
+
+            li {
+                margin: 8px;
+                :hover {
+                    color: #111;
+                }
+            }
+
+            a {
+                color: #7e7e7e;
+            }
+        }
+    }
+}

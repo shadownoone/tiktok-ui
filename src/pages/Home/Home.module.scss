@@ -1,0 +1,34 @@
+.pad-50 {
+    padding: 0 50px;
+}
+.mg-bt-24 {
+    margin-bottom: 24px;
+    font-weight: 400;
+}
+.course-list {
+    gap: 10px;
+    display: flex;
+
+    .course-item {
+        flex: 1;
+        background: #ffffff;
+
+        border-radius: 12px;
+
+        .thumb {
+            width: calc(100% + 2px);
+
+            margin: -1px;
+            object-fit: cover;
+            border-radius: 12px 12px 0px 0px;
+        }
+
+        .info {
+            margin-top: 48px;
+            h3 {
+                margin-bottom: 32px;
+                font-weight: 500;
+            }
+        }
+    }
+}
