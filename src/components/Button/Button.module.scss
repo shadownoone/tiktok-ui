@@ -29,3 +29,21 @@
         box-shadow: inset 0 -1px 0 0 #707072;
     }
 }
+.add_to_bag {
+    width: 100%;
+    min-height: 58px;
+    padding: 18px 24px;
+    border: 1.5px solid transparent;
+    font-size: 1.6rem;
+}
+.favourite {
+    width: 100%;
+    min-height: 58px;
+    padding: 18px 24px;
+    border: 1.5px solid transparent;
+    font-size: 1.6rem;
+    background: #ffffff;
+    border-color: #cacacb;
+    color: #111;
+    margin-top: 12px;
+}

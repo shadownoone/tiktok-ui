@@ -4,7 +4,18 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-function Button({ children, className, to, href, featured = false, primary = false, ...passProps }) {
+function Button({
+    children,
+    className,
+    to,
+    href,
+    featured = false,
+    primary = false,
+    add_to_bag = false,
+    favourite = false,
+    move_favourite = false,
+    ...passProps
+}) {
     let Comp = 'button';
     const props = {
         ...passProps,
@@ -21,6 +32,9 @@ function Button({ children, className, to, href, featured = false, primary = fal
     const classes = cx('wrapper', {
         primary,
         featured,
+        add_to_bag,
+        favourite,
+        move_favourite,
         [className]: className,
     });
 

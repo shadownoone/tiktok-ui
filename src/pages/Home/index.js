@@ -84,7 +84,7 @@ function Home() {
                         </div>
                     </div>
                     <div className={cx('course-item')}>
-                        <a href="/#">
+                        <a href="/product/trannin">
                             <img
                                 src="https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_452,c_limit/4f79ad51-9f73-4b6e-a9d9-a0ac53493b90/nike-just-do-it.png"
                                 alt=""
