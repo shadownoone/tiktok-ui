@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container__login {
+        width: 300px; // Độ rộng của form
+
+        .container__login-header {
+            // Thiết lập style cho header của form
+        }
+
+        .login-logo {
+            // Style cho logo
+        }
+
+        .login-text {
+            // Style cho đoạn text
+        }
+
+        .info-mation {
+            display: flex;
+            flex-direction: column;
+            align-items: center; // Đảm bảo các phần tử bên trong được căn giữa theo chiều dọc
+            margin-top: 20px; // Khoảng cách từ text đến form
+            .wd-100pct {
+                width: 100%;
+                .text-input {
+                    position: relative;
+                    color: #111;
+                }
+                .text-input input {
+                    width: 100%;
+                    box-shadow: 0 0 0 1px #ccc;
+                    border-radius: 4px;
+                    border: none;
+                    box-sizing: border-box;
+                    -webkit-appearance: none;
+                    padding-right: 32px;
+                    padding-top: 16px;
+                    padding-bottom: 16px;
+                    padding-left: 16px;
+                }
+            }
+        }
+    }
+}
