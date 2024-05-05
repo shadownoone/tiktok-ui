@@ -55,11 +55,11 @@
 }
 .mt-6 {
     margin-top: 24px;
-}
-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 }
 .wd-100pct {
     width: 100%;
@@ -273,9 +273,9 @@ a.translated-link {
     .img-fluid {
         max-width: 188px !important;
         height: auto;
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
     }
-}
-p {
-    margin-top: 0;
-    margin-bottom: 1rem;
 }
