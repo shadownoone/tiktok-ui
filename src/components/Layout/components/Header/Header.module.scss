@@ -21,71 +21,72 @@
         }
         .user-menu {
             display: flex;
-            .menu-list {
-                display: flex;
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                .menu-item {
-                    :hover {
-                        color: #757575;
-                    }
-                    position: relative;
-
-                    .sub-menu {
-                        border-radius: 10px;
-                        padding: 30px 20px;
-                        right: 0;
-                        width: 240px;
-                        z-index: 1;
-                        position: absolute;
-                        background: #ffffff;
-
-                        display: none;
-
-                        li {
-                            a {
-                                font-size: 1.4rem;
-                            }
-                            :hover {
-                                color: #111;
-                            }
-                        }
-
-                        h3 {
-                            margin-bottom: 10px;
-                        }
-
-                        a {
-                            display: inline-block;
-                            padding: 8px 16px;
-                            color: #7e7e7e;
-                        }
-                    }
-                    a {
-                        font-size: 1.2rem;
-
-                        font-weight: 600;
-                        text-decoration: none;
-                        color: #111111;
-                    }
-                    span {
-                        margin: 0 6px;
-                    }
-                    div {
-                        span {
-                        }
-                        svg {
-                            font-size: 1.6rem;
-                        }
-                    }
-                }
-                :hover .sub-menu {
-                    display: block;
-                    opacity: 1;
-                    transition: opacity 0.3s ease;
-                }
+        }
+        .menu-list {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+        }
+        .list-item {
+            padding: 0 10px;
+            font-weight: 500;
+            font-size: 1.2rem;
+            position: relative; /* Thêm dòng này */
+            z-index: 999;
+            :hover {
+                color: #7e7e7e;
             }
+        }
+        .list-item:hover .sub-menu {
+            /* Thay đổi tại đây */
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        span {
+            padding-left: 10px;
+        }
+        .menu-item {
+            position: relative;
+        }
+        .sub-menu {
+            border-radius: 10px;
+            padding: 30px 20px;
+            right: 0;
+            width: 240px;
+            z-index: 1;
+            position: absolute;
+            background: #ffffff;
+            display: none;
+            li a {
+                font-size: 1.4rem;
+                color: #7e7e7e;
+            }
+            li a:hover {
+                color: #111;
+            }
+            h3 {
+                margin-bottom: 10px;
+            }
+            a {
+                display: inline-block;
+                padding: 8px 16px;
+            }
+        }
+        .menu-list .list-item a {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        span {
+            margin: 0 6px;
+        }
+        div span {
+        }
+        div svg {
+            font-size: 1.6rem;
         }
     }
 
@@ -142,6 +143,61 @@
                 margin: 6px;
                 cursor: pointer;
             }
+        }
+    }
+}
+.menu-item {
+    padding: 12px 14px 18px;
+    list-style: none;
+    font-weight: 500;
+
+    a {
+        text-decoration: none;
+        color: #111;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.menu-item:hover .menu-notification {
+    /* Hiển thị .menu-notification khi hover vào .menu-item */
+    display: flex;
+    padding: 0 20%;
+}
+
+.menu-notification {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 0;
+    position: absolute;
+    top: 100%; /* Hiển thị menu xuống dưới li */
+    background: #ffffff;
+    z-index: 99;
+    text-align: center;
+    width: 100%; /* Chiếm toàn bộ chiều ngang của màn hình */
+    left: 0;
+
+    .sub-menu {
+        padding: 40px 0px 0px;
+        flex: 1 0 25%;
+        max-width: calc(25% - 20px);
+        margin: 0 10px 20px;
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        ul li a {
+            display: block; /* Hiển thị các mục a như là các dòng riêng biệt */
+            margin-bottom: 8px; /* Khoảng cách giữa các mục */
+            font-size: 1.4rem;
+            color: #7e7e7e;
+        }
+
+        a:hover {
+            color: #111;
         }
     }
 }
