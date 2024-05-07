@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 import styles from './Product.module.scss';
+
+import Slider from 'react-slick';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames/bind';
@@ -10,6 +13,26 @@ import { faAngleLeft, faAngleRight, faStar } from '@fortawesome/free-solid-svg-i
 const cx = classNames.bind(styles);
 
 function Product() {
+    let sliderRef = useRef(null);
+    const next = () => {
+        sliderRef.slickNext();
+    };
+    const previous = () => {
+        sliderRef.slickPrev();
+    };
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+    };
+
+    const [selectedSize, setSelectedSize] = useState(null);
+
+    const handleSizeSelection = (size) => {
+        setSelectedSize(size);
+    };
     return (
         <div>
             <div className={cx('product')}>
@@ -76,21 +99,19 @@ function Product() {
                                                 </div>
                                             </legend>
                                             <div className={cx('sizes-guild')}>
-                                                <div className={cx('sizes-item')}>
-                                                    <input className={cx('visually-hidden')} />
+                                                <div
+                                                    className={cx('sizes-item', { selected: selectedSize === 'EU 40' })}
+                                                    onClick={() => handleSizeSelection('EU 40')}
+                                                >
+                                                    <input className={cx('visually-hidden')} type="radio" />
                                                     <label className={cx('css-xf3ahq')}>EU 40</label>
                                                 </div>
-                                                <div className={cx('sizes-item')}>
-                                                    <input className={cx('visually-hidden')} />
-                                                    <label className={cx('css-xf3ahq')}>EU 40</label>
-                                                </div>
-                                                <div className={cx('sizes-item')}>
-                                                    <input className={cx('visually-hidden')} />
-                                                    <label className={cx('css-xf3ahq')}>EU 40</label>
-                                                </div>
-                                                <div className={cx('sizes-item')}>
-                                                    <input className={cx('visually-hidden')} />
-                                                    <label className={cx('css-xf3ahq')}>EU 40</label>
+                                                <div
+                                                    className={cx('sizes-item', { selected: selectedSize === 'EU 41' })}
+                                                    onClick={() => handleSizeSelection('EU 41')}
+                                                >
+                                                    <input className={cx('visually-hidden')} type="radio" />
+                                                    <label className={cx('css-xf3ahq')}>EU 41</label>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -98,8 +119,12 @@ function Product() {
                                     <div>
                                         <div>
                                             <div className={cx('css-18lb4yz')}>
-                                                <Button add_to_bag>Add to Bag</Button>
-                                                <Button favourite>Favourite</Button>
+                                                <Button add_to_bag className={cx('btn-add-to-bag')}>
+                                                    Add to Bag
+                                                </Button>
+                                                <Button favourite className={cx('btn-favourite')}>
+                                                    Favourite
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
@@ -268,12 +293,275 @@ function Product() {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src="https://static.nike.com/a/images/t_default/1419ed34-7762-420a-9f2a-2e2a65d5aba9/dunk-low-shoes-kKHp1z.png"
-                        alt=""
-                    />
                 </div>
             </div>
+            <aside aria-label="You may also like product carousel" className={cx('css-16dt2qi')}>
+                <div className={cx('nds-stack', 'css-z31e8r', 'ej3jrvm0', 'gap-xs-m')}>
+                    <div className={cx('')}>
+                        <section
+                            className={cx(
+                                'nds-carousel',
+                                'navigation-mode-buttonAbove',
+                                'grid-aligned',
+                                'css-1xkyzis',
+                                'e1qnw47h0',
+                            )}
+                        >
+                            <h3 className={cx('carousel-header')}>
+                                <span>You Might Also Like</span>
+                                <div className={cx('nav-btn-wrapper')}>
+                                    <Button className={cx('carousel-btn', 'prev-btn')} onClick={previous}>
+                                        <div className={cx('icon')}>
+                                            <FontAwesomeIcon icon={faAngleLeft} />
+                                        </div>
+                                    </Button>
+                                    <Button className={cx('carousel-btn', 'next-btn')} onClick={next}>
+                                        <div className={cx('icon')}>
+                                            <FontAwesomeIcon icon={faAngleRight} />
+                                        </div>
+                                    </Button>
+                                </div>
+                            </h3>
+                            <Slider
+                                className={cx('slider')}
+                                ref={(slider) => {
+                                    sliderRef = slider;
+                                }}
+                                {...settings}
+                            >
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                                <li className={cx('slide')}>
+                                    <a href="/">
+                                        <figure className={cx('css-6df7i4')}>
+                                            <div className={cx('image-wrapper')}>
+                                                <div className={cx('nds-image-wrapper', 'css-p63i3i', 'e1ttvrug0')}>
+                                                    <div className={cx('css-w9w6jj', 'finished-loading')}>
+                                                        <div className={cx('css-nr5j7g')}>
+                                                            <picture>
+                                                                <img
+                                                                    alt=""
+                                                                    src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png"
+                                                                    className={cx(
+                                                                        'image-img',
+                                                                        'should-transition',
+                                                                        'product-image',
+                                                                    )}
+                                                                />
+                                                            </picture>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('css-tah5ss')}>
+                                                <div className={cx('details-text')}>
+                                                    <h3>FFF (Men's Team) 2024/25 Match Home</h3>
+                                                    <h4>Men's Nike Dri-FIT ADV Football Authentic Shirt</h4>
+                                                </div>
+                                                <div
+                                                    className={cx('nds-box', 'price-info', 'css-187c8kp', 'e161jrzw0')}
+                                                >
+                                                    <div className={cx('nds-box', 'css-1ho4p3s', 'evb9czr0')}>
+                                                        <h3>3,779,000₫</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </li>
+                            </Slider>
+                        </section>
+                    </div>
+                </div>
+            </aside>
         </div>
     );
 }

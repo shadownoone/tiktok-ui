@@ -182,6 +182,13 @@
                     .css-18lb4yz {
                         margin-top: 6px;
                         margin-bottom: 24px;
+                        .btn-add-to-bag:hover {
+                            background: #707072;
+                        }
+                        .btn-favourite:hover {
+                            outline: 0;
+                            border-color: #111111;
+                        }
                     }
                     .promo {
                         padding-right: 24px;
@@ -329,4 +336,190 @@
 }
 .pt2-sm {
     padding-top: 8px;
+}
+.css-16dt2qi {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow-x: hidden;
+}
+.css-z31e8r {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    height: 100%;
+}
+.css-z31e8r > * {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.css-1xkyzis.grid-aligned {
+    padding: 0 48px;
+}
+.css-1xkyzis {
+    position: relative;
+}
+.css-1xkyzis .carousel-header {
+    margin-block-end: 12px;
+    // padding: 2px 48px 0 48px;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #111111;
+}
+.css-1xkyzis .nav-btn-wrapper {
+    display: flex;
+    justify-content: flex-end; /* Đảm bảo các nút sẽ căn giữa và cách nhau  */
+    align-items: center;
+    margin-inline-start: 12px;
+}
+
+.css-1xkyzis .carousel-btn {
+    background: none;
+    border: 0px;
+    color: #111111;
+    cursor: pointer;
+    display: flex;
+    padding: 0px;
+    border-radius: 24px;
+}
+
+.css-1xkyzis .carousel-btn .icon {
+    height: 48px;
+    width: 48px;
+    background-color: #e5e5e5;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media (min-resolution: 0.001dpcm) {
+    .css-1xkyzis > .slider {
+        color: inherit;
+        transition: color 250ms ease-in-out;
+        scrollbar-color: #707072 transparent;
+        scrollbar-width: thin;
+    }
+}
+
+.css-1xkyzis > .slider {
+    // overflow-x: auto;
+    // scroll-snap-type: x mandatory;
+    // display: flex;
+}
+@media (min-width: 960px) {
+    .css-1xkyzis.grid-aligned > .slider > * {
+        --column-offset: 18px;
+        flex: 0 0 calc(33% - 18px);
+        margin: 0 12px 0 0;
+    }
+}
+.css-1xkyzis.grid-aligned > .slider > * {
+    // --column-offset: 20px;
+    // flex: 0 0 calc(75% - var(--column-offset));
+    // margin: 0 12px 0 0;
+    padding: 0px;
+}
+.css-1xkyzis > .slider > * {
+    color: #111111;
+    flex-flow: column;
+
+    min-width: auto;
+    padding: 0 calc(12px / 2);
+    scroll-snap-align: start;
+    .slide {
+        padding-right: 10px;
+    }
+}
+.css-6df7i4 {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    height: 100%;
+    margin: 0px;
+    width: 100%;
+}
+.css-6df7i4 .image-wrapper {
+    position: relative;
+}
+.css-6df7i4 > * {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.css-w9w6jj.finished-loading {
+    animation: unset;
+    border: none;
+    background: transparent;
+}
+
+.css-w9w6jj {
+    background: #cacacb;
+    border: 1px solid #cacacb;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    border-radius: 4px;
+}
+.css-nr5j7g {
+    position: relative;
+    width: auto;
+}
+.css-nr5j7g::before {
+    content: '';
+    width: 1px;
+    margin-left: 1px;
+    float: left;
+    height: 0px;
+    padding-top: calc(100%);
+}
+.css-nr5j7g::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.css-nr5j7g > video,
+.css-nr5j7g img,
+.css-nr5j7g iframe,
+.css-nr5j7g embed,
+.css-nr5j7g canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.css-tah5ss {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    height: 100%;
+    padding-inline-start: 0px;
+}
+.css-6df7i4 > * + * {
+    margin-top: 12px;
+}
+
+.css-6df7i4 > * {
+    // margin-top: 0px;
+    margin-bottom: 0px;
+    h3 {
+        font-weight: 400;
+    }
+    h4 {
+        font-weight: 400;
+        color: #707072;
+    }
+}
+.css-tah5ss .details,
+.css-tah5ss .price-info {
+    position: relative;
+}
+.css-187c8kp {
+    padding-block-start: 8px;
+}
+.selected {
+    border: 2px solid black; /* Đường viền đen bao quanh ô khi được chọn */
 }
