@@ -1,11 +1,12 @@
 .product {
     margin: 0 auto;
     max-width: 1200px;
-    z-index: -1;
+
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+
     .product-img {
         @media (min-width: 960px) {
             width: calc(100% - 456px);
@@ -21,6 +22,7 @@
             margin-left: 8px;
             max-height: 669px;
             min-height: 455px;
+
             .product-list-img {
                 display: flex;
                 position: relative;

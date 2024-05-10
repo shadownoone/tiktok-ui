@@ -1,14 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Checkout.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 function Checkout() {
+    const [formData, setFormData] = useState({
+        name: '',
+        address: '',
+        email: '',
+        phoneNumber: '',
+    });
+
+    const [gdprConsent, setGdprConsent] = useState(false);
+
     const [paymmentMethod, setPaymentMethod] = useState('payment-on-delivery');
+
+    const [isFormFilled, setIsFormFilled] = useState(false); // Thêm biến state mới
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleGdprConsentChange = (event) => {
+        setGdprConsent(event.target.checked);
+    };
 
     const handlePaymentChange = (event) => {
         setPaymentMethod(event.target.value);
+    };
+
+    useEffect(() => {
+        const isFormValid = Object.values(formData).every((value) => value !== '') && gdprConsent;
+        setIsFormFilled(isFormValid);
+    }, [formData, gdprConsent]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Kiểm tra xem tất cả các ô input đã được điền đầy đủ thông tin hay không
+        const isFormValid = Object.values(formData).every((value) => value !== '') && gdprConsent;
+
+        if (isFormValid) {
+            setIsFormFilled(true);
+            console.log('Form is valid. Place order action can be executed.');
+        } else {
+            setIsFormFilled(false);
+            alert('Please fill in all required information and consent to GDPR policy.');
+        }
     };
 
     return (
@@ -73,22 +116,46 @@ function Checkout() {
                                         <form className={cx('contact-form')}>
                                             <div className={cx('wd-100pct')}>
                                                 <div className={cx('text-input')}>
-                                                    <input placeholder="Name" className={cx('pr-8')} />
+                                                    <input
+                                                        placeholder="Name"
+                                                        className={cx('pr-8')}
+                                                        name="name"
+                                                        value={formData.name}
+                                                        onChange={handleInputChange}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className={cx('wd-100pct')}>
                                                 <div className={cx('text-input')}>
-                                                    <input placeholder="Address" className={cx('pr-8')} />
+                                                    <input
+                                                        placeholder="Address"
+                                                        className={cx('pr-8')}
+                                                        name="address"
+                                                        value={formData.address}
+                                                        onChange={handleInputChange}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className={cx('wd-100pct')}>
                                                 <div className={cx('text-input')}>
-                                                    <input placeholder="Email" className={cx('pr-8')} />
+                                                    <input
+                                                        placeholder="Email"
+                                                        className={cx('pr-8')}
+                                                        name="email"
+                                                        value={formData.email}
+                                                        onChange={handleInputChange}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className={cx('wd-100pct')}>
                                                 <div className={cx('text-input')}>
-                                                    <input placeholder="Phone Number" className={cx('pr-8')} />
+                                                    <input
+                                                        placeholder="Phone Number"
+                                                        className={cx('pr-8')}
+                                                        name="phoneNumber"
+                                                        value={formData.phoneNumber}
+                                                        onChange={handleInputChange}
+                                                    />
                                                 </div>
                                             </div>
                                         </form>
@@ -151,8 +218,8 @@ function Checkout() {
                                             <input
                                                 type="checkbox"
                                                 id="gdpr"
-                                                className={cx('ng-pristine')}
                                                 required=""
+                                                onChange={handleGdprConsentChange}
                                             ></input>
                                             <div className={cx('help-text')}>
                                                 <div className={cx('consent-description')}>
@@ -179,7 +246,17 @@ function Checkout() {
                                 </label>
                             </div>
 
-                            <Button className={cx('btn-checkout')}>Place Order</Button>
+                            <Button
+                                className={cx('btn-checkout')}
+                                onClick={handleSubmit}
+                                style={{
+                                    cursor: isFormFilled ? 'pointer' : 'default',
+                                    backgroundColor: isFormFilled ? '#000' : '#f5f5f5',
+                                    color: isFormFilled ? '#fff' : '#757575',
+                                }}
+                            >
+                                Place Order
+                            </Button>
                         </div>
                     </div>
                 </div>

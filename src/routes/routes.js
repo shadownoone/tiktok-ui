@@ -1,17 +1,22 @@
 //layout
 
 import config from '~/config';
-import Home from '~/pages/Home';
-import Product from '~/pages/Product';
-import Cart from '~/pages/Cart';
-import Checkout from '~/pages/Checkout';
-import Login from '~/pages/Login';
-import ListProduct from '~/pages/ListProduct';
+import Home from '~/pages/user/Home';
+import Product from '~/pages/user/Product';
+import Cart from '~/pages/user/Cart';
+import Checkout from '~/pages/user/Checkout';
+import Login from '~/pages/user/Login';
+import ListProduct from '~/pages/user/ListProduct';
+import Register from '~/pages/user/Register';
 
 const publicRoutes = [
     {
         path: config.routes.login,
         component: Login,
+    },
+    {
+        path: config.routes.register,
+        component: Register,
     },
     {
         path: config.routes.home,

@@ -132,8 +132,12 @@ function Cart() {
                                     </span>
                                 </div>
                                 <div className={cx('css-1e78l50')}>
-                                    <Button add_to_bag>Guest Checkout</Button>
-                                    <Button add_to_bag>Member Checkout</Button>
+                                    <Button add_to_bag className={cx('btn-add-to-bag')}>
+                                        Guest Checkout
+                                    </Button>
+                                    <Button add_to_bag className={cx('btn-add-to-bag')}>
+                                        Member Checkout
+                                    </Button>
                                 </div>
                             </aside>
                         </div>

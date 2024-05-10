@@ -5,6 +5,7 @@ const routes = {
     product: '/product/:slug',
     cart: '/cart',
     checkout: '/checkout',
+    register: '/register',
 
     notFound: '/not-found',
 };

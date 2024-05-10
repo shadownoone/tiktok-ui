@@ -4,7 +4,7 @@ import Button from '../Button';
 
 const cx = classNames.bind(styles);
 
-function Caption({ subTitle, title, desc }) {
+function Caption({ subTitle, title, desc, buttonLink, buttonText }) {
     return (
         <figcaption className={cx('caption')}>
             <div className={cx('content')}>
@@ -12,8 +12,8 @@ function Caption({ subTitle, title, desc }) {
                 <h3 className={cx('title')}>{title}</h3>
                 <p className={cx('desc')}>{desc}</p>
                 <div className={cx('cta-container')}>
-                    <Button primary href="/">
-                        <span>Get Notified</span>
+                    <Button primary to={buttonLink}>
+                        <span>{buttonText}</span>
                     </Button>
                 </div>
             </div>
