@@ -6,6 +6,8 @@ import { faHeart, faUser } from '@fortawesome/free-regular-svg-icons';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Search from '../Search';
+import config from '~/config';
+import routes from '~/config/configRoutes';
 
 const cx = classNames.bind(styles);
 
@@ -107,10 +109,7 @@ function Header() {
                     <div className={cx('action')}>
                         <ul className={cx('menu')}>
                             <li className={cx('menu-item')}>
-                                <a href="/">New & Featured</a>
-                            </li>
-                            <li className={cx('menu-item')}>
-                                <a href="/">Men</a>
+                                <a href={config.routes.men}>Men</a>
 
                                 <div className={cx('menu-notification')}>
                                     <div className={cx('sub-menu')}>
@@ -164,13 +163,10 @@ function Header() {
                                 </div>
                             </li>
                             <li className={cx('menu-item')}>
-                                <a href="/">Women</a>
+                                <a href={config.routes.women}>Women</a>
                             </li>
                             <li className={cx('menu-item')}>
-                                <a href="/">Customise</a>
-                            </li>
-                            <li className={cx('menu-item')}>
-                                <a href="/">SNKRS</a>
+                                <a href="/">Kid</a>
                             </li>
                         </ul>
                     </div>

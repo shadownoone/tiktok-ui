@@ -8,6 +8,8 @@ import Checkout from '~/pages/user/Checkout';
 import Login from '~/pages/user/Login';
 import ListProduct from '~/pages/user/ListProduct';
 import Register from '~/pages/user/Register';
+import Men from '~/pages/user/Men';
+import Women from '~/pages/user/Women';
 
 const publicRoutes = [
     {
@@ -21,6 +23,14 @@ const publicRoutes = [
     {
         path: config.routes.home,
         component: Home,
+    },
+    {
+        path: config.routes.men,
+        component: Men,
+    },
+    {
+        path: config.routes.women,
+        component: Women,
     },
     {
         path: config.routes.listproduct,

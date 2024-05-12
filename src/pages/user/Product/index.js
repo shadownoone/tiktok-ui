@@ -11,6 +11,7 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { faAngleLeft, faAngleRight, faStar } from '@fortawesome/free-solid-svg-icons';
+import ProductImage from './ProductImage';
 
 const cx = classNames.bind(styles);
 
@@ -67,44 +68,7 @@ function Product() {
     return (
         <div>
             <div className={cx('product')}>
-                <div className={cx('product-img')}>
-                    <div className={cx('product-img-show')}>
-                        <div className={cx('product-list-img')}>
-                            <div className={cx('img-item')}>
-                                <input type="radio" className={cx('input-img')} />
-                                <label role="button" className={cx('label-img')}>
-                                    <img
-                                        src="https://static.nike.com/a/images/t_default/1419ed34-7762-420a-9f2a-2e2a65d5aba9/dunk-low-shoes-kKHp1z.png"
-                                        alt=""
-                                    />
-                                </label>
-                            </div>
-                            <div className={cx('img-item')}>
-                                <input type="radio" className={cx('input-img')} />
-                                <label role="button" className={cx('label-img')}>
-                                    <img
-                                        src="https://static.nike.com/a/images/t_default/1419ed34-7762-420a-9f2a-2e2a65d5aba9/dunk-low-shoes-kKHp1z.png"
-                                        alt=""
-                                    />
-                                </label>
-                            </div>
-                        </div>
-                        <div className={cx('product-main-img')}>
-                            <img
-                                src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/c960a73e-8565-4cc6-9329-d2449c1944df/dunk-low-shoes-kKHp1z.png"
-                                alt="Nike Dunk Low Men"
-                            />
-                            <div className={cx('css-19ih7ns')}>
-                                <Button className={cx('trannin')}>
-                                    <FontAwesomeIcon icon={faAngleLeft} />
-                                </Button>
-                                <Button className={cx('trannin')}>
-                                    <FontAwesomeIcon icon={faAngleRight} />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProductImage />
                 <div className={cx('product-info')}>
                     <div className={cx('info-layout')}>
                         <div>
