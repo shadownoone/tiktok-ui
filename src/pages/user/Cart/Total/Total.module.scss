@@ -1,0 +1,129 @@
+.css-fmwpya {
+    vertical-align: top;
+    margin-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+@media only screen and (min-width: 960px) {
+    .css-1gkmirf {
+        padding: 0px 8px;
+        margin-top: 0px;
+        margin-bottom: 24px;
+    }
+}
+.css-1gkmirf {
+    width: 100%;
+    // margin-top: 20px;
+    vertical-align: top;
+    // padding: 0px;
+    display: flex;
+    flex-direction: column;
+}
+@media only screen and (min-width: 960px) {
+    .css-1uo8q9v {
+        margin-bottom: 8px;
+        margin-top: 8px;
+    }
+}
+.css-22zdcr {
+    margin-bottom: 24px;
+}
+.css-1uo8q9v {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.css-1wwm6t9 {
+    margin-right: auto;
+    margin-left: 8px;
+}
+.css-bvtceq {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+.css-dw6iwb {
+    font-family: nike-glyphs;
+    display: inline-block;
+    line-height: inherit;
+    vertical-align: top;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+}
+.css-dw6iwb::before {
+    content: '';
+}
+@media only screen and (min-width: 960px) {
+    .css-16m8u5c {
+        width: 250px;
+    }
+}
+
+.css-16m8u5c {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    border-radius: 2px;
+    background: rgb(88, 88, 88);
+    padding: 16px;
+    width: 200px;
+    z-index: 7;
+    font-size: var(--podium-cds-font-size-xs);
+    line-height: 1.3;
+    color: rgb(255, 255, 255);
+    inset: 100% auto auto 50%;
+    margin: 10px auto auto -20px;
+}
+.css-16m8u5c::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    inset: auto auto 100% 10px;
+    border-top: none;
+    border-bottom: 10px solid rgb(88, 88, 88);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+@media only screen and (min-width: 960px) {
+    .css-1tsu91r {
+        padding: 16px 0px;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+    }
+}
+
+.css-1tsu91r {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 12px 0px;
+    text-align: right;
+    // padding: 0px;
+}
+@media only screen and (min-width: 960px) {
+    .css-1e78l50 {
+        display: block;
+        position: relative;
+        padding-top: 20px;
+        margin: 0px;
+        box-shadow: none;
+    }
+}
+.css-1e78l50 {
+    // display: none;
+}
+.btn-add-to-bag:hover {
+    background: #707072;
+}

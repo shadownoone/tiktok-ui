@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './Checkout.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
+import OrderSummary from './OrderSummary';
+import InfoForm from './InfoForm';
 
 const cx = classNames.bind(styles);
+
 function Checkout() {
     const [formData, setFormData] = useState({
         name: '',
@@ -13,10 +16,8 @@ function Checkout() {
     });
 
     const [gdprConsent, setGdprConsent] = useState(false);
-
-    const [paymmentMethod, setPaymentMethod] = useState('payment-on-delivery');
-
-    const [isFormFilled, setIsFormFilled] = useState(false); // Thêm biến state mới
+    const [paymentMethod, setPaymentMethod] = useState('payment-on-delivery');
+    const [isFormFilled, setIsFormFilled] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -42,14 +43,11 @@ function Checkout() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Kiểm tra xem tất cả các ô input đã được điền đầy đủ thông tin hay không
         const isFormValid = Object.values(formData).every((value) => value !== '') && gdprConsent;
 
         if (isFormValid) {
-            setIsFormFilled(true);
             console.log('Form is valid. Place order action can be executed.');
         } else {
-            setIsFormFilled(false);
             alert('Please fill in all required information and consent to GDPR policy.');
         }
     };
@@ -60,51 +58,7 @@ function Checkout() {
                 <div className={cx('content')}>
                     <div className={cx('checkout')}>
                         <div className={cx('checkout__summary')}>
-                            <div className={cx('order-summary')}>
-                                <div className={cx('order-summary__container')}>
-                                    <div className={cx('pt-5-md')}>
-                                        <h2>Order Summary</h2>
-                                    </div>
-                                    <div className={cx('order-summary__container__content')}>
-                                        <div className={cx('price-summary')}>
-                                            <div className={cx('price-summary__row')}>
-                                                <div>Subtotal</div>
-                                                <div className={cx('price-summary__price')}>6,168,000₫</div>
-                                            </div>
-                                            <div className={cx('price-summary__row')}>
-                                                <div>Delivery/Shipping</div>
-                                                <div className={cx('price-summary__price')}>Free</div>
-                                            </div>
-                                            <div className={cx('price-summary__row', 'price-summary__row--total')}>
-                                                <div>Total</div>
-                                                <div className={cx('price-summary__price')}> 6,168,000₫ </div>
-                                            </div>
-                                        </div>
-                                        <div className={cx('shipment')}>
-                                            <h3 className={cx('shipment__title-bold')}>
-                                                Arrives Fri, May 10 - Thu, May 16
-                                            </h3>
-                                            <div className={cx('mt-2')}>
-                                                <div className={cx('cart-item')}>
-                                                    <img
-                                                        className={cx('cart-item__image')}
-                                                        src="https://static.nike.com/a/images/f_jpg,b_rgb:FFFFFF,q_auto,h_400/e6da41fa-1be4-4ce5-b89c-22be4f1f02d4/CW2288_111"
-                                                        alt=""
-                                                    />
-                                                    <div className={cx('cart-check')}>
-                                                        <h3>Nike Air Force 1 '07 Men's Shoes</h3>
-                                                        <div className={cx('cart-item__info')}>Qty : 1</div>
-                                                        <div className={cx('cart-item__info')}>Size : EU 44</div>
-                                                        <div className={cx('cart-item__info', 'cart-item__group')}>
-                                                            <span>2,929,000₫</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <OrderSummary />
                         </div>
                         <div className={cx('checkout__body')}>
                             <div className={cx('section')}>
@@ -113,52 +67,7 @@ function Checkout() {
                                 </div>
                                 <div className={cx('section__content')}>
                                     <div className={cx('mt-6')}>
-                                        <form className={cx('contact-form')}>
-                                            <div className={cx('wd-100pct')}>
-                                                <div className={cx('text-input')}>
-                                                    <input
-                                                        placeholder="Name"
-                                                        className={cx('pr-8')}
-                                                        name="name"
-                                                        value={formData.name}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className={cx('wd-100pct')}>
-                                                <div className={cx('text-input')}>
-                                                    <input
-                                                        placeholder="Address"
-                                                        className={cx('pr-8')}
-                                                        name="address"
-                                                        value={formData.address}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className={cx('wd-100pct')}>
-                                                <div className={cx('text-input')}>
-                                                    <input
-                                                        placeholder="Email"
-                                                        className={cx('pr-8')}
-                                                        name="email"
-                                                        value={formData.email}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className={cx('wd-100pct')}>
-                                                <div className={cx('text-input')}>
-                                                    <input
-                                                        placeholder="Phone Number"
-                                                        className={cx('pr-8')}
-                                                        name="phoneNumber"
-                                                        value={formData.phoneNumber}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </form>
+                                        <InfoForm formData={formData} handleInputChange={handleInputChange} />
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +83,7 @@ function Checkout() {
                                                 <div className={cx('select-input')}>
                                                     <select
                                                         onChange={handlePaymentChange}
-                                                        value={paymmentMethod}
+                                                        value={paymentMethod}
                                                         className={cx('pr-8')}
                                                     >
                                                         <option value="payment-on-delivery">Payment on delivery</option>
@@ -182,7 +91,7 @@ function Checkout() {
                                                             Transfer via ATM/Internet Banking
                                                         </option>
                                                     </select>
-                                                    {paymmentMethod === 'transfer-via-atm-internet-banking' && (
+                                                    {paymentMethod === 'transfer-via-atm-internet-banking' && (
                                                         <div className={cx('card')}>
                                                             <div className={cx('card-body')}>
                                                                 <p>
@@ -220,7 +129,7 @@ function Checkout() {
                                                 id="gdpr"
                                                 required=""
                                                 onChange={handleGdprConsentChange}
-                                            ></input>
+                                            />
                                             <div className={cx('help-text')}>
                                                 <div className={cx('consent-description')}>
                                                     I have read and consent to eShopWorld processing my information in
@@ -246,15 +155,7 @@ function Checkout() {
                                 </label>
                             </div>
 
-                            <Button
-                                className={cx('btn-checkout')}
-                                onClick={handleSubmit}
-                                style={{
-                                    cursor: isFormFilled ? 'pointer' : 'default',
-                                    backgroundColor: isFormFilled ? '#000' : '#f5f5f5',
-                                    color: isFormFilled ? '#fff' : '#757575',
-                                }}
-                            >
+                            <Button className={cx('btn-checkout')} onClick={handleSubmit} disabled={!isFormFilled}>
                                 Place Order
                             </Button>
                         </div>
