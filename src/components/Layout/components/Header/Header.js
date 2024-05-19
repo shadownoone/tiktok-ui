@@ -7,7 +7,6 @@ import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Search from '../Search';
 import config from '~/config';
-import routes from '~/config/configRoutes';
 
 const cx = classNames.bind(styles);
 
@@ -45,10 +44,10 @@ function Header() {
                                         <a href="/">Returns </a>
                                     </li>
                                     <li className={cx('sub-menu-item')}>
-                                        <a href="/">Contact Us</a>{' '}
+                                        <a href="/">Contact Us</a>
                                     </li>
                                     <li className={cx('sub-menu-item')}>
-                                        <a href="/">Privacy Policy</a>{' '}
+                                        <a href="/">Privacy Policy</a>
                                     </li>
                                     <li className={cx('sub-menu-item')}>
                                         <a href="/">Terms of Sale </a>
@@ -73,7 +72,7 @@ function Header() {
                                 <ul className={cx('sub-menu')}>
                                     <h3>Account</h3>
                                     <li className={cx('sub-menu-item')}>
-                                        <a href="/">Profile</a>
+                                        <a href={config.routes.profile}>Profile</a>
                                     </li>
                                     <li className={cx('sub-menu-item')}>
                                         <a href="/">Orders</a>
@@ -92,7 +91,7 @@ function Header() {
                                         <a href="/">Terms of Use </a>
                                     </li>
                                     <li className={cx('sub-menu-item')}>
-                                        <a href="/">Log Out</a>
+                                        <a href={config.routes.login}>Log Out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -110,7 +109,6 @@ function Header() {
                         <ul className={cx('menu')}>
                             <li className={cx('menu-item')}>
                                 <a href={config.routes.men}>Men</a>
-
                                 <div className={cx('menu-notification')}>
                                     <div className={cx('sub-menu')}>
                                         <h3>Shoes</h3>
@@ -162,6 +160,7 @@ function Header() {
                                     </div>
                                 </div>
                             </li>
+
                             <li className={cx('menu-item')}>
                                 <a href={config.routes.women}>Women</a>
                             </li>
@@ -170,15 +169,16 @@ function Header() {
                             </li>
                         </ul>
                     </div>
-                    <div className={cx('overlay')}></div> {/* Lớp overlay */}
+
+                    {/* Search */}
                     <Search />
                     <div className={cx('btn-action')}>
-                        <button className={cx('favorites-btn')}>
+                        <a className={cx('favorites-btn')} href={config.routes.cart}>
                             <FontAwesomeIcon icon={faHeart} />
-                        </button>
-                        <button className={cx('bag-btn')}>
+                        </a>
+                        <a className={cx('bag-btn')} href={config.routes.cart}>
                             <FontAwesomeIcon icon={faBagShopping} />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </header>

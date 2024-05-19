@@ -10,6 +10,12 @@ import ListProduct from '~/pages/user/ListProduct';
 import Register from '~/pages/user/Register';
 import Men from '~/pages/user/Men';
 import Women from '~/pages/user/Women';
+import Profile from '~/pages/user/Profile';
+
+import AdminLayout from '~/components/Layout/Admin/AdminLayout';
+import Dashboard from '~/pages/admin/Dashboard';
+import AdminProfile from '~/pages/admin/Profile';
+import AdminProduct from '~/pages/admin/Product';
 
 const publicRoutes = [
     {
@@ -23,6 +29,10 @@ const publicRoutes = [
     {
         path: config.routes.home,
         component: Home,
+    },
+    {
+        path: config.routes.profile,
+        component: Profile,
     },
     {
         path: config.routes.men,
@@ -47,6 +57,23 @@ const publicRoutes = [
     {
         path: config.routes.checkout,
         component: Checkout,
+    },
+
+    //
+    {
+        path: config.routes.dashboard,
+        component: Dashboard,
+        layout: AdminLayout, // Sử dụng AdminLayout cho Dashboard
+    },
+    {
+        path: config.routes.adminprofile,
+        component: AdminProfile,
+        layout: AdminLayout,
+    },
+    {
+        path: config.routes.adminproduct,
+        component: AdminProduct,
+        layout: AdminLayout,
     },
 ];
 const privateRoutes = [];

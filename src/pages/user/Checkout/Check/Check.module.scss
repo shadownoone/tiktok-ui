@@ -1,0 +1,50 @@
+.gdpr-consent {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 60px;
+    margin-top: 24px;
+    label {
+        display: inline-block;
+    }
+}
+.input-checkbox {
+    position: relative;
+    height: 48px;
+    min-height: 24px;
+    display: flex;
+}
+.input-checkbox__container {
+    display: inline-flex; /* Thêm dòng này */
+    align-items: center; /* Thêm dòng này */
+    flex-shrink: 0;
+    height: 18px;
+    width: 100%;
+    margin: 3px 1px 1px;
+    vertical-align: middle;
+
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.help-text {
+    display: inline-flex; /* Thêm dòng này */
+    align-items: center; /* Thêm dòng này */
+    height: 1.5rem;
+    line-height: 1.5rem;
+    vertical-align: top;
+    color: #111;
+}
+.consent-description {
+    margin-left: 24px;
+    margin-bottom: 12px;
+    color: #8d8d8d;
+    line-height: 1.5rem;
+    font-size: 1.4rem;
+}
+a.link-privacy,
+a.link-cookie,
+a.translated-link {
+    color: inherit;
+    text-decoration: underline !important;
+}

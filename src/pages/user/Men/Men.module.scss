@@ -1,0 +1,26 @@
+.pad-50 {
+    padding: 0 50px;
+}
+.mg-bt-24 {
+    margin-bottom: 24px;
+    font-weight: 400;
+}
+
+.course-list {
+    gap: 10px;
+    display: flex;
+}
+.nav-sub {
+    display: flex;
+    justify-content: space-between;
+    padding: 26px 0 12px 0;
+    .list-sub {
+        display: flex;
+        .sub-item {
+            margin-right: 32px;
+            a {
+                font-weight: 500;
+            }
+        }
+    }
+}

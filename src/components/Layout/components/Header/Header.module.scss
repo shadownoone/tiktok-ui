@@ -34,7 +34,7 @@
             font-weight: 500;
             font-size: 1.2rem;
             position: relative; /* Thêm dòng này */
-            z-index: 11;
+
             :hover {
                 color: #7e7e7e;
             }
@@ -56,7 +56,7 @@
             padding: 30px 20px;
             right: 0;
             width: 240px;
-            z-index: 1;
+            z-index: 11;
             position: absolute;
             background: #ffffff;
             display: none;
@@ -162,11 +162,14 @@
     }
 }
 
-.menu-item:hover .menu-notification {
+.menu-item:hover {
+    .menu-notification {
+        display: flex;
+        padding: 0 20%;
+        /* Hiển thị hoàn toàn */
+    }
+
     /* Hiển thị .menu-notification khi hover vào .menu-item */
-    display: flex;
-    padding: 0 20%;
-    backdrop-filter: blur(4px);
 }
 
 .menu-notification {
@@ -175,12 +178,14 @@
     justify-content: space-evenly;
     padding: 0;
     position: absolute;
-    top: 100%; /* Hiển thị menu xuống dưới li */
+    top: 70%; /* Hiển thị menu xuống dưới li */
     background: #ffffff;
     z-index: 99;
     text-align: center;
     width: 100%; /* Chiếm toàn bộ chiều ngang của màn hình */
     left: 0;
+    /* Bắt đầu từ trạng thái trong suốt */
+    animation: FadeIn 0.3s ease;
 
     .sub-menu {
         padding: 40px 0px 0px;
@@ -201,5 +206,25 @@
         a:hover {
             color: #111;
         }
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+@keyframes FadeIn {
+    from {
+        transform: translateY(-20px); /* Bắt đầu từ vị trí cao hơn */
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0); /* Di chuyển xuống vị trí ban đầu */
+        opacity: 1;
     }
 }

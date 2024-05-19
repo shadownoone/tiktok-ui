@@ -93,58 +93,6 @@ form > * {
     width: 100%;
 }
 
-.gdpr-consent {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
-    margin-top: 24px;
-    label {
-        display: inline-block;
-    }
-}
-
-.input-checkbox {
-    position: relative;
-    height: 48px;
-    min-height: 24px;
-    display: flex;
-}
-.input-checkbox__container {
-    display: inline-flex; /* Thêm dòng này */
-    align-items: center; /* Thêm dòng này */
-    flex-shrink: 0;
-    height: 18px;
-    width: 100%;
-    margin: 3px 1px 1px;
-    vertical-align: middle;
-
-    position: relative;
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-.help-text {
-    display: inline-flex; /* Thêm dòng này */
-    align-items: center; /* Thêm dòng này */
-    height: 1.5rem;
-    line-height: 1.5rem;
-    vertical-align: top;
-    color: #111;
-}
-.consent-description {
-    margin-left: 24px;
-    margin-bottom: 12px;
-    color: #8d8d8d;
-    line-height: 1.5rem;
-    font-size: 1.4rem;
-}
-a.link-privacy,
-a.link-cookie,
-a.translated-link {
-    color: inherit;
-    text-decoration: underline !important;
-}
 .btn-checkout {
     cursor: default;
     color: #757575;
@@ -162,33 +110,8 @@ a.translated-link {
     padding-bottom: 16px;
     padding-left: 16px;
 }
-.card {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-.card-body {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.25rem;
-    .img-fluid {
-        max-width: 188px !important;
-        height: auto;
-        p {
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-    }
+.btn-checkout.enabled {
+    cursor: pointer;
+    color: white;
+    background-color: #111;
 }

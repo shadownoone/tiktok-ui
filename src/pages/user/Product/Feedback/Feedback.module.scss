@@ -1,0 +1,95 @@
+.product-feedback {
+    .css-w11ebw {
+        min-width: 320px;
+        margin-top: 40px;
+        box-shadow: inset 0 -1px 0 #e5e5e5;
+        & > details {
+            box-shadow: inset 0 -1px 0 #e5e5e5;
+        }
+        details {
+            display: block;
+        }
+        & summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            position: relative;
+            padding: 28px 0;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+            ::after {
+                content: '';
+                position: absolute;
+                right: 6px;
+                top: calc(50% - 6px);
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                transform: rotate(45deg);
+            }
+            .css-n209rx {
+                margin-right: 20px;
+                padding: 0 4px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+        }
+    }
+}
+
+.prl1-sm {
+    padding: 0 4px;
+}
+.mb4-sm {
+    margin-bottom: 16px;
+}
+.mt4-sm {
+    margin-top: 16px;
+}
+
+.ncss-list-ul .ncss-li {
+    list-style-type: disc;
+    margin-left: 16px;
+}
+.css-1e0k2gt {
+    padding-top: 20px;
+}
+
+.mb5-sm {
+    margin-bottom: 20px;
+}
+.mb10-sm {
+    margin-bottom: 40px;
+}
+.mr1-sm {
+    padding-right: 4px;
+}
+.text-color-secondary {
+    color: #707072;
+}
+.pl4-sm {
+    padding-left: 16px;
+}
+
+.d-sm-ib {
+    display: inline-block;
+}
+
+.pb2-sm {
+    padding-bottom: 8px;
+}
+.mt10-sm {
+    margin-top: 40px;
+}
+.css-15juft3 {
+    cursor: pointer;
+    padding-bottom: 4px;
+    border-radius: unset;
+}
+
+.pt2-sm {
+    padding-top: 8px;
+}

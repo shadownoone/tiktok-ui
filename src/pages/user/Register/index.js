@@ -3,6 +3,7 @@ import styles from './Register.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import images from '~/assets/images';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -51,6 +52,11 @@ function Register() {
                                 <input type="email" placeholder="Email" />
                             </div>
                         </div>
+                        <span>
+                            <a style={{ textDecoration: 'underline' }} href={config.routes.login}>
+                                have an account
+                            </a>
+                        </span>
                         <Button add_to_bag>Register</Button>
                     </form>
                 </div>

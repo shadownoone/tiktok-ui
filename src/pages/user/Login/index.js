@@ -3,6 +3,8 @@ import styles from './Login.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import images from '~/assets/images';
+import routes from '~/config/configRoutes';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +15,7 @@ function Login() {
                 <div className={cx('container__login-header')}>
                     <div className={cx('logo')}>
                         <a href={'/'}>
-                            <img className={cx('logo-main')} src={images.logo} alt="abc" />
+                            <img style={{ height: '66px' }} className={cx('logo-main')} src={images.logo} alt="abc" />
                         </a>
                     </div>
                     <div className={cx('login-text')}>YOUR ACCOUNT FOR EVERYTHING NIKE</div>
@@ -28,6 +30,11 @@ function Login() {
                                 <input type="Password" placeholder="password" />
                             </div>
                         </div>
+                        <span>
+                            <a style={{ textDecoration: 'underline' }} href={config.routes.register}>
+                                Don't have an account
+                            </a>
+                        </span>
                         <Button add_to_bag>Login</Button>
                     </form>
                 </div>

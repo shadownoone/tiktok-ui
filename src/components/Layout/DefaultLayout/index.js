@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import Header from '~/components/Layout/components/Header';
 import Banner from '~/components/Layout/components/Banner';
 
-//import Footer from '../components/Footer';
+import Footer from '~/components/Layout/components/Footer';
 import styles from './DefaultLayout.module.scss';
 
 const cx = classNames.bind(styles);
@@ -19,7 +19,7 @@ function DefaultLayout({ children }) {
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }

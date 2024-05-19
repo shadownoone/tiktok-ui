@@ -1,7 +1,6 @@
-import Caption from '~/components/Caption';
 import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
+
 import CourseItem from '../../../components/CourseItem';
 import ImageCaption from '../../../components/ImageCaption';
 
@@ -51,7 +50,6 @@ function Home() {
                     />
                 </div>
             </div>
-            <div></div>
         </div>
     );
 }

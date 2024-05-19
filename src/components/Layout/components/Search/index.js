@@ -1,10 +1,7 @@
-// Search.js
-
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Tippy from '@tippyjs/react/headless';
 import SearchResult from './SearchResult'; // Import SearchResult component
 import styles from './Search.module.scss';
 import images from '~/assets/images';
@@ -20,11 +17,13 @@ function Search() {
 
     const handleSearchClick = () => {
         setShowOverlay(true);
+        document.body.classList.add('overlay-header-hidden'); // Thêm lớp CSS để ẩn header
     };
 
     const handleClickOutside = (event) => {
         if (event.target === event.currentTarget) {
             setShowOverlay(false);
+            document.body.classList.remove('overlay-header-hidden'); // Loại bỏ lớp CSS để hiển thị lại header
         }
     };
 
@@ -38,6 +37,7 @@ function Search() {
         setShowOverlay(false);
         setIsTyping(false); // Reset typing state when cancelling search
         setSearchInput(''); // Clear search input
+        document.body.classList.remove('overlay-header-hidden'); // Loại bỏ lớp CSS để hiển thị lại header
     };
 
     const handleClearInput = () => {
@@ -93,15 +93,12 @@ function Search() {
                     </div>
                 </>
             )}
-            <Tippy>
-                <div className={cx('search')} onClick={handleSearchClick}>
-                    <input placeholder="Search" spellCheck={false} value={searchInput} onChange={handleInputChange} />
-
-                    <button className={cx('search-btn')}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
-                </div>
-            </Tippy>
+            <div className={cx('search')} onClick={handleSearchClick}>
+                <input placeholder="Search" spellCheck={false} value={searchInput} onChange={handleInputChange} />
+                <button className={cx('search-btn')}>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+            </div>
         </>
     );
 }

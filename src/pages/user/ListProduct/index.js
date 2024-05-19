@@ -5,7 +5,6 @@ import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 
-import axios from 'axios';
 import ProductList from './ProductList';
 import SimpleBar from './SimpleBar';
 

@@ -1,0 +1,91 @@
+.product-sub {
+    margin-top: 32px;
+
+    .mt5-sm {
+        border: none;
+        margin: 20px 0 12px;
+
+        .css-ybrhvy {
+            background: transparent;
+            width: 100%;
+            text-align: left;
+
+            @media only screen and (min-width: 960px) {
+                padding: 0;
+            }
+
+            .css-uf1ume {
+                display: flex;
+                justify-content: space-between;
+
+                @media only screen and (min-width: 960px) {
+                    padding-top: 0;
+                }
+            }
+        }
+
+        .sizes-guild {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+            margin-top: 8px;
+
+            .sizes-item {
+                position: relative;
+
+                .visually-hidden {
+                    position: absolute !important;
+                    height: 1px;
+                    width: 1px;
+                    overflow: hidden;
+                    clip: rect(1px 1px 1px 1px);
+                    white-space: nowrap;
+                    -webkit-appearance: radio;
+                }
+
+                .css-xf3ahq {
+                    cursor: pointer;
+                    outline: none;
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgb(255, 255, 255);
+                    color: rgb(17, 17, 17);
+                    box-shadow: rgb(229, 229, 229) 0 0 0 1px;
+                    height: 48px;
+                    border-radius: 4px;
+                }
+
+                &.selected .css-xf3ahq {
+                    border: 2px solid black;
+                }
+            }
+        }
+    }
+
+    .css-18lb4yz {
+        margin: 6px 0 24px;
+
+        .btn-add-to-bag:hover {
+            background: #707072;
+        }
+
+        .btn-favourite:hover {
+            outline: 0;
+            border-color: #111111;
+        }
+    }
+
+    .promo {
+        padding: 0 24px;
+        color: #111111;
+        background-color: #ffffff;
+        margin-bottom: 24px;
+
+        span {
+            display: block;
+            text-align: center;
+        }
+    }
+}

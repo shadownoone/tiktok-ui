@@ -1,0 +1,48 @@
+.mt-6 {
+    margin-top: 24px;
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+.wd-100pct {
+    width: 100%;
+}
+.mb-8,
+form > * {
+    margin-bottom: 32px;
+}
+.pr-8 {
+    width: 100%;
+    padding-right: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    .img-fluid {
+        max-width: 188px !important;
+        height: auto;
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+    }
+}
