@@ -18,6 +18,10 @@ function MainProduct() {
             // console.log(res);
         });
     });
+
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    };
     return (
         <div className={cx('product-main')}>
             <div className={cx('main-info')}>
@@ -25,7 +29,7 @@ function MainProduct() {
                 <h2 className={cx('info-sub-title')}>{product?.gender} Shoes</h2>
                 <div className={cx('info-price')}>
                     <div className={'product-price'}>
-                        <span> {product?.price}đ</span>
+                        <span>{formatPrice(product?.price)}</span>
                     </div>
                 </div>
             </div>

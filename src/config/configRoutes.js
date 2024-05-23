@@ -13,6 +13,7 @@ const routes = {
     dashboard: '/admin/dashboard',
     adminprofile: '/admin/profile',
     adminproduct: '/admin/product',
+    order: '/admin/order',
 
     notFound: '/not-found',
 };

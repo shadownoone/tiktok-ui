@@ -140,9 +140,24 @@
                 height: 39px;
                 text-align: center;
                 font-size: 1.8rem;
-
+                position: relative;
                 margin: 6px;
                 cursor: pointer;
+            }
+            .bag-btn::after {
+                content: attr(data-quantity); /* Sử dụng attribute content để hiển thị số */
+                position: absolute;
+                top: -8px; /* Điều chỉnh vị trí của số theo y-axis */
+                right: -8px; /* Điều chỉnh vị trí của số theo x-axis */
+                background-color: #e5e5e5; /* Màu sắc của nền số */
+                color: #111111; /* Màu sắc của số */
+                font-size: 1rem; /* Kích thước font của số */
+                border-radius: 50%; /* Để có góc cong */
+                padding: 4px; /* Để tăng khoảng cách giữa số và viền */
+                width: 20px; /* Điều chỉnh kích thước số */
+                height: 20px;
+                text-align: center; /* Canh giữa nội dung của số */
+                font-weight: bold; /* Đậm chữ số */
             }
         }
     }

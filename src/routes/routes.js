@@ -16,6 +16,7 @@ import AdminLayout from '~/components/Layout/Admin/AdminLayout';
 import Dashboard from '~/pages/admin/Dashboard';
 import AdminProfile from '~/pages/admin/Profile';
 import AdminProduct from '~/pages/admin/Product';
+import Order from '~/pages/admin/Order';
 
 const publicRoutes = [
     {
@@ -73,6 +74,11 @@ const publicRoutes = [
     {
         path: config.routes.adminproduct,
         component: AdminProduct,
+        layout: AdminLayout,
+    },
+    {
+        path: config.routes.order,
+        component: Order,
         layout: AdminLayout,
     },
 ];

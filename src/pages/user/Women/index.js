@@ -4,6 +4,7 @@ import styles from './Women.module.scss';
 import classNames from 'classnames/bind';
 import CourseItem from '../../../components/CourseItem';
 import ImageCaption from '../../../components/ImageCaption';
+import NavSub from '~/components/NavSub';
 
 const cx = classNames.bind(styles);
 
@@ -12,23 +13,7 @@ function Women() {
         <div className={cx('pad-50')}>
             <div className={cx('sub-title')}>
                 <div>
-                    <nav className={cx('nav-sub')}>
-                        <h1>Women</h1>
-                        <div>
-                            <ul className={cx('list-sub')}>
-                                <li className={cx('sub-item')}>
-                                    <a href="/">Shoes</a>
-                                </li>
-                                <li className={cx('sub-item')}>
-                                    <a href="/">Clothing</a>
-                                </li>
-                                <li className={cx('sub-item')}>
-                                    <a href="/">Gear</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div></div>
-                    </nav>
+                    <NavSub title="Women" />
                 </div>
             </div>
             <ImageCaption

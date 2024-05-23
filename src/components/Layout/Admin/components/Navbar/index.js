@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, Typography, Link } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom'; // Import thẻ Link từ react-router-dom
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
@@ -17,7 +17,7 @@ function Navbar() {
         { text: t('Dashboard'), icon: <DashboardIcon />, path: '/admin/dashboard' },
         { text: t('Profile'), icon: <PersonIcon />, path: '/admin/profile' },
         { text: t('Product'), icon: <LocalMallIcon />, path: '/admin/product' },
-        { text: t('Order'), icon: <ListAltIcon />, path: '/order' },
+        { text: t('Order'), icon: <ListAltIcon />, path: '/admin/order' },
         { text: t('Blog'), icon: <ArticleIcon />, path: '/blog' },
         { text: t('Mail'), icon: <MailIcon />, path: '/mail' },
         { text: t('Settings'), icon: <SettingsIcon />, path: '/settings' },

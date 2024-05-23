@@ -1,16 +1,37 @@
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faUser } from '@fortawesome/free-regular-svg-icons';
+import { useSelector } from 'react-redux';
 
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Search from '../Search';
 import config from '~/config';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '~/redux/accountSlice';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+    const cart = useSelector((state) => state?.cart?.cart) || [];
+    const isLogin = useSelector((state) => state.account.isLogin);
+    const dispatch = useDispatch();
+
+    const getTotalQuantity = () => {
+        let total = 0;
+        cart.forEach((item) => {
+            total += item.quantity;
+        });
+        return total;
+    };
+    const totalQuantity = getTotalQuantity();
+
+    const handleLogout = () => {
+        // Xử lý đăng xuất, ví dụ: đặt isLoggedIn về false và làm các công việc khác (ví dụ: xóa token khỏi localStorage)
+        dispatch(userLogout());
+    };
     return (
         <div>
             <header className={cx('header-container')}>
@@ -61,40 +82,43 @@ function Header() {
                                 </ul>
                             </li>
 
-                            {/* <li className={cx('menu-item')}>
-                            <a href="/#">
-                                <span>Sign In</span>
-                            </a>
-                        </li> */}
-                            <li className={cx('list-item')}>
-                                <a href="/">Hi,Tai</a> {''}
-                                <FontAwesomeIcon icon={faUser} />
-                                <ul className={cx('sub-menu')}>
-                                    <h3>Account</h3>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href={config.routes.profile}>Profile</a>
-                                    </li>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href="/">Orders</a>
-                                    </li>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href="/">Favourites</a>
-                                    </li>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href="/">Experiences</a>
-                                    </li>
+                            {isLogin ? (
+                                <li className={cx('list-item')}>
+                                    <a href="/">Hi, Tai</a> {''}
+                                    <FontAwesomeIcon icon={faUser} />
+                                    <ul className={cx('sub-menu')}>
+                                        <h3>Account</h3>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href={config.routes.profile}>Profile</a>
+                                        </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href="/">Orders</a>
+                                        </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href="/">Favourites</a>
+                                        </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href="/">Experiences</a>
+                                        </li>
 
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href="/">Account Settings</a>
-                                    </li>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href="/">Terms of Use </a>
-                                    </li>
-                                    <li className={cx('sub-menu-item')}>
-                                        <a href={config.routes.login}>Log Out</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href="/">Account Settings</a>
+                                        </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href="/">Terms of Use </a>
+                                        </li>
+                                        <li className={cx('sub-menu-item')}>
+                                            <a href={config.routes.login} onClick={handleLogout}>
+                                                Log Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            ) : (
+                                <li className={cx('list-item')}>
+                                    <a href={config.routes.login}>Sign In</a>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>
@@ -176,7 +200,7 @@ function Header() {
                         <a className={cx('favorites-btn')} href={config.routes.cart}>
                             <FontAwesomeIcon icon={faHeart} />
                         </a>
-                        <a className={cx('bag-btn')} href={config.routes.cart}>
+                        <a className={cx('bag-btn')} href={config.routes.cart} data-quantity={totalQuantity || 0}>
                             <FontAwesomeIcon icon={faBagShopping} />
                         </a>
                     </div>

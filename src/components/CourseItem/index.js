@@ -4,11 +4,12 @@ import classNames from 'classnames/bind';
 import styles from './CourseItem.module.scss';
 
 const cx = classNames.bind(styles);
+
 function CourseItem({ imageSrc, title, buttonLink, buttonText }) {
     return (
         <div className={cx('course-item')}>
-            <a href="buttonLink">
-                <img src={imageSrc} alt={title} className="thumb" />
+            <a href={buttonLink}>
+                <img src={imageSrc} alt={title} className={cx('thumb')} />
             </a>
             <div className="info">
                 <div>

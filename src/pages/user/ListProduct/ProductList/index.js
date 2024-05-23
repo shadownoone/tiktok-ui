@@ -13,6 +13,9 @@ function ProductList() {
             setListOfPosts(response.data.data);
         });
     }, []);
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    };
     return (
         <div className={cx('product-grid', 'css-1hl0l1w')}>
             <main>
@@ -62,7 +65,7 @@ function ProductList() {
                                                                     'css-11s12ax',
                                                                 )}
                                                             >
-                                                                {product.price}đ
+                                                                {formatPrice(product?.price)}
                                                             </div>
                                                         </div>
                                                     </div>

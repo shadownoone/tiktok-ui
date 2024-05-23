@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './SubProduct.module.scss';
 import Button from '~/components/Button';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '~/redux/cartSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
-function SubProduct({ listSize = [] }) {
+function SubProduct() {
+    const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState(null);
+    const [listOfPosts, setListOfPosts] = useState([]);
+    const [listImg, setListImg] = useState([]);
+    const [listSize, setListSize] = useState([]);
+    const dispatch = useDispatch();
+    const { id } = useParams();
 
     const handleSizeSelection = (size) => {
         setSelectedSize(size);
@@ -17,7 +27,17 @@ function SubProduct({ listSize = [] }) {
             alert('Please select a size before adding to bag.');
             return;
         }
-        // Handle logic for adding to bag
+        const productToAdd = {
+            ...listOfPosts,
+            selectedSize: selectedSize,
+        };
+
+        if (window.confirm('Product added to cart. Do you want to go to the cart?')) {
+            dispatch(addToCart(productToAdd));
+            navigate('/cart');
+        } else {
+            dispatch(addToCart(productToAdd)); // Add to cart without navigation
+        }
     };
 
     const handleFavourite = () => {
@@ -28,9 +48,17 @@ function SubProduct({ listSize = [] }) {
         // Handle logic for adding to favourites
     };
 
+    useEffect(() => {
+        axios.get(`http://localhost:5000/shoes/${id}`).then((response) => {
+            setListOfPosts(response.data.data);
+            setListImg(response.data.data.ShoeImages);
+            setListSize(response.data.data.Sizes);
+        });
+    }, [id]);
+
     return (
         <div className={cx('product-sub')}>
-            <form id="buyTools">
+            <div id="buyTools">
                 <div>
                     <fieldset className={cx('mt5-sm')}>
                         <legend className={cx('css-ybrhvy')}>
@@ -54,21 +82,19 @@ function SubProduct({ listSize = [] }) {
                     </fieldset>
                 </div>
                 <div>
-                    <div>
-                        <div className={cx('css-18lb4yz')}>
-                            <Button add_to_bag to="" className={cx('btn-add-to-bag')} onClick={handleAddToBag}>
-                                Add to Bag
-                            </Button>
-                            <Button favourite className={cx('btn-favourite')} onClick={handleFavourite}>
-                                Favourite
-                            </Button>
-                        </div>
+                    <div className={cx('css-18lb4yz')}>
+                        <Button add_to_bag className={cx('btn-add-to-bag')} onClick={handleAddToBag}>
+                            Add to Bag
+                        </Button>
+                        <Button favourite className={cx('btn-favourite')} onClick={handleFavourite}>
+                            Favourite
+                        </Button>
                     </div>
                 </div>
                 <section className={cx('promo')}>
                     <span>This product is excluded from site promotions and discounts.</span>
                 </section>
-            </form>
+            </div>
         </div>
     );
 }

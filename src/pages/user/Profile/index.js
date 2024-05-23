@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     MDBCol,
     MDBContainer,
@@ -16,8 +16,22 @@ import {
     MDBListGroup,
     MDBListGroupItem,
 } from 'mdb-react-ui-kit';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import * as profileService from '~/services/profileService';
 
 export default function Profile() {
+    const [customer, setCustomer] = useState(null);
+    const { id } = useParams();
+    const userProfile = useSelector((state) => state.account);
+
+    useEffect(() => {
+        profileService.getUserById(userProfile.userInfo.user.customerId).then((res) => {
+            setCustomer(res.data);
+        });
+    }, []);
+
     return (
         <section style={{ backgroundColor: '#eee' }}>
             <MDBContainer className="py-5">
@@ -26,7 +40,7 @@ export default function Profile() {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardImage
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                    src={customer.profileImageUrl}
                                     alt="avatar"
                                     className="rounded-circle"
                                     style={{ width: '150px' }}
@@ -78,7 +92,7 @@ export default function Profile() {
                                         <MDBCardText>Full Name</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                                        <MDBCardText className="text-muted">{customer.fullName}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
                                 <hr />
@@ -87,7 +101,7 @@ export default function Profile() {
                                         <MDBCardText>Email</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">example@example.com</MDBCardText>
+                                        <MDBCardText className="text-muted">{customer.email}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
                                 <hr />
@@ -96,25 +110,26 @@ export default function Profile() {
                                         <MDBCardText>Phone</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
+                                        <MDBCardText className="text-muted">{customer.phoneNumber}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
-                                <hr />
-                                <MDBRow>
-                                    <MDBCol sm="3">
-                                        <MDBCardText>Mobile</MDBCardText>
-                                    </MDBCol>
-                                    <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                                    </MDBCol>
-                                </MDBRow>
+
                                 <hr />
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>Address</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
+                                        <MDBCardText className="text-muted">{customer.address}</MDBCardText>
+                                    </MDBCol>
+                                </MDBRow>
+                                <hr />
+                                <MDBRow>
+                                    <MDBCol sm="3">
+                                        <MDBCardText>Create At</MDBCardText>
+                                    </MDBCol>
+                                    <MDBCol sm="9">
+                                        <MDBCardText className="text-muted">{customer.createdAt}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
                             </MDBCardBody>
@@ -128,37 +143,27 @@ export default function Profile() {
                                             <span className="text-primary font-italic me-1">assigment</span> Project
                                             Status
                                         </MDBCardText>
-                                        <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>
-                                            Web Design
-                                        </MDBCardText>
+                                        <MDBCardText className="mb-1">Web Design</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Website Markup
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Website Markup</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={72} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            One Page
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">One Page</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={89} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Mobile Template
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Mobile Template</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={55} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Backend API
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Backend API</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={66} valuemin={0} valuemax={100} />
                                         </MDBProgress>
@@ -173,37 +178,27 @@ export default function Profile() {
                                             <span className="text-primary font-italic me-1">assigment</span> Project
                                             Status
                                         </MDBCardText>
-                                        <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>
-                                            Web Design
-                                        </MDBCardText>
+                                        <MDBCardText className="mb-1">Web Design</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={80} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Website Markup
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Website Markup</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={72} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            One Page
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">One Page</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={89} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Mobile Template
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Mobile Template</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={55} valuemin={0} valuemax={100} />
                                         </MDBProgress>
 
-                                        <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                                            Backend API
-                                        </MDBCardText>
+                                        <MDBCardText className="mt-4 mb-1">Backend API</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width={66} valuemin={0} valuemax={100} />
                                         </MDBProgress>

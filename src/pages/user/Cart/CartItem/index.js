@@ -1,56 +1,70 @@
-import React from 'react';
-
-import styles from './CartItem.module.scss';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import classNames from 'classnames/bind';
-import Button from '~/components/Button';
 import { faHeart, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { incrementQuantity, decrementQuantity, removeItem } from '~/redux/cartSlice';
+import Button from '~/components/Button';
+import classNames from 'classnames/bind';
+import styles from './CartItem.module.scss';
+import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-function CartItem() {
+function CartItem({ data }) {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(data.quantity);
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    };
+
+    const totalPrice = data.price * data.quantity;
+
+    const handleIncrement = () => {
+        if (quantity < data.stock_quantity) {
+            setQuantity(quantity + 1);
+            dispatch(incrementQuantity(data.id));
+        } else {
+            // Hiển thị thông báo hoặc thực hiện hành động tương ứng khi số lượng vượt quá kho
+            alert('Sản phẩm đã hết hàng');
+        }
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+            dispatch(decrementQuantity(data.id));
+        }
+    };
+
     return (
         <div className={cx('cart-item', 'css-48ks35')}>
             <div className={cx('css-k008qs')}>
                 <figure className={cx('css-wu61ed')}>
                     <a href="/">
-                        <img
-                            src="https://secure-images.nike.com/is/image/DotCom/CW2288_111?align=0,1&cropN=0,0,0,0&resMode=sharp&bgc=f5f5f5&fmt=jpg"
-                            alt=""
-                        />
+                        <img src={data.ShoeImages[0].image_url} alt={data.product_name} />
                     </a>
                 </figure>
                 <div className={cx('css-1muntc4')}>
                     <div className={cx('css-18o14p5')}>
                         <div className={cx('css-1u52liu')}>
                             <a href="/">
-                                <h2>Nike Air Force 1 '07</h2>
+                                <h2>{data.product_name}</h2>
                             </a>
-                            <div className={cx('css-1f31asj')}>Men's Shoes</div>
-                            <div className={cx('css-1sk38s6')}>White/White</div>
+                            <div className={cx('css-1f31asj')}></div>
                             <div className={cx('css-3x77rp')}>
                                 <div className={cx('css-1grl6ds')}>
                                     <label>Size</label>
                                     <div className={cx('css-123i213')}>
                                         <div className={cx('css-1ilkyak')}></div>
-                                        <select className={cx('css-46rwad')}>
-                                            <option>40</option>
-                                            <option>41</option>
-                                            <option>42</option>
-                                            <option>43</option>
+                                        <select className={cx('css-46rwad')} onChange={(e) => {}} readOnly>
+                                            {data.Sizes.map((item) => (
+                                                <option key={item.id}>{item.size}</option>
+                                            ))}
                                         </select>
                                     </div>
-                                </div>
-                                <div className={cx('css-1grl6ds')}>
-                                    <label>Quantity</label>
-                                    <div className={cx('css-123i213')}>
-                                        <div className={cx('css-1ilkyak')}></div>
-                                        <select className={cx('css-46rwad')}>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
+                                    <div className={cx('cartItem__incrDec')}>
+                                        <button onClick={handleDecrement}>-</button>
+                                        <p>{data.quantity}</p>
+                                        <button onClick={handleIncrement}>+</button>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +74,7 @@ function CartItem() {
                                 <span className={cx('css-1892kza')}>
                                     <span className={cx('price')}>
                                         <span className={cx('css-144dtt')}>
-                                            <span>2,929,000₫</span>
+                                            <span>{formatPrice(totalPrice)}</span>
                                         </span>
                                     </span>
                                 </span>
@@ -75,7 +89,7 @@ function CartItem() {
                                 </Button>
                             </li>
                             <li className={cx('css-1fqekfo')}>
-                                <Button className={cx('move_favourite')}>
+                                <Button className={cx('move_favourite')} onClick={() => dispatch(removeItem(data.id))}>
                                     <FontAwesomeIcon icon={faTrashCan} />
                                 </Button>
                             </li>

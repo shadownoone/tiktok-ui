@@ -174,3 +174,22 @@
     font-size: 16px;
     padding-top: 12px;
 }
+.cartItem__incrDec {
+    display: flex;
+    align-items: center;
+
+    button {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 0.5em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    p {
+        margin: 0 1em;
+    }
+}

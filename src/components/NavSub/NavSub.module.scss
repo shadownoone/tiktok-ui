@@ -1,0 +1,14 @@
+.nav-sub {
+    display: flex;
+    justify-content: space-between;
+    padding: 26px 0 12px 0;
+    .list-sub {
+        display: flex;
+        .sub-item {
+            margin-right: 32px;
+            a {
+                font-weight: 500;
+            }
+        }
+    }
+}

@@ -14,6 +14,7 @@ function Button({
     add_to_bag = false,
     favourite = false,
     move_favourite = false,
+    onClick,
     ...passProps
 }) {
     let Comp = 'button';
@@ -39,7 +40,7 @@ function Button({
     });
 
     return (
-        <Comp className={classes} {...passProps}>
+        <Comp onClick={onClick} className={classes} {...passProps}>
             <span>{children}</span>
         </Comp>
     );

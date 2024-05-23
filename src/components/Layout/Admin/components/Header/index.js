@@ -5,11 +5,13 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { useTranslation } from 'react-i18next';
 import 'flag-icons/css/flag-icons.min.css';
 import '~/i18n'; // Import cấu hình i18n
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
     const { t, i18n } = useTranslation();
     const [langAnchorEl, setLangAnchorEl] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
 
     const handleAvatarClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,6 +28,10 @@ function Header() {
     const handleLanguageChange = (lang) => {
         i18n.changeLanguage(lang);
         setLangAnchorEl(null);
+    };
+    const handleLogout = () => {
+        handleMenuClose();
+        navigate('/login');
     };
 
     return (
@@ -66,7 +72,7 @@ function Header() {
                     </IconButton>
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
                         <MenuItem onClick={handleMenuClose}>{t('help')}</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>{t('logout')}</MenuItem>
+                        <MenuItem onClick={handleLogout}>{t('logout')}</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>
