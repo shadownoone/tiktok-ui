@@ -17,6 +17,7 @@ import Dashboard from '~/pages/admin/Dashboard';
 import AdminProfile from '~/pages/admin/Profile';
 import AdminProduct from '~/pages/admin/Product';
 import Order from '~/pages/admin/Order';
+import User from '~/pages/admin/User';
 
 const publicRoutes = [
     {
@@ -79,6 +80,11 @@ const publicRoutes = [
     {
         path: config.routes.order,
         component: Order,
+        layout: AdminLayout,
+    },
+    {
+        path: config.routes.user,
+        component: User,
         layout: AdminLayout,
     },
 ];

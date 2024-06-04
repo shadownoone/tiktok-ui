@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React } from 'react';
 import styles from './ListProduct.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';

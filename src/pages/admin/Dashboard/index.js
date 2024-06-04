@@ -4,8 +4,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import '~/i18n'; // Import cấu hình i18n
-import { useTranslation } from 'react-i18next';
+
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
@@ -24,11 +23,9 @@ const data = [
 ];
 
 function Dashboard() {
-    const { t, i18n } = useTranslation();
-
     return (
         <div>
-            <h1 style={{ padding: '16px 0' }}> {t('Hi, Welcome back')}👋</h1>
+            <h1 style={{ padding: '16px 0' }}> Hi, Welcome back 👋</h1>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} md={3}>
                     <Card style={{ backgroundColor: '#1976d2', color: 'white' }}>
@@ -71,7 +68,7 @@ function Dashboard() {
                 <Card>
                     <CardContent>
                         <Typography variant="h6" style={{ marginBottom: '20px' }}>
-                            {t('income_over_time')}
+                            income_over_time
                         </Typography>
                         <ResponsiveContainer width="100%" height={400}>
                             <LineChart data={data}>

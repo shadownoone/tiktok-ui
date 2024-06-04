@@ -3,24 +3,23 @@ import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/mat
 import { Link as RouterLink } from 'react-router-dom'; // Import thẻ Link từ react-router-dom
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
+import GroupIcon from '@mui/icons-material/Group';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ArticleIcon from '@mui/icons-material/Article';
 import MailIcon from '@mui/icons-material/Mail';
 import SettingsIcon from '@mui/icons-material/Settings';
-import '~/i18n'; // Import cấu hình i18n
-import { useTranslation } from 'react-i18next';
 
 function Navbar() {
-    const { t, i18n } = useTranslation();
     const menuItems = [
-        { text: t('Dashboard'), icon: <DashboardIcon />, path: '/admin/dashboard' },
-        { text: t('Profile'), icon: <PersonIcon />, path: '/admin/profile' },
-        { text: t('Product'), icon: <LocalMallIcon />, path: '/admin/product' },
-        { text: t('Order'), icon: <ListAltIcon />, path: '/admin/order' },
-        { text: t('Blog'), icon: <ArticleIcon />, path: '/blog' },
-        { text: t('Mail'), icon: <MailIcon />, path: '/mail' },
-        { text: t('Settings'), icon: <SettingsIcon />, path: '/settings' },
+        { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
+        { text: 'Profile', icon: <PersonIcon />, path: '/admin/profile' },
+        { text: 'Product', icon: <LocalMallIcon />, path: '/admin/product' },
+        { text: 'Order', icon: <ListAltIcon />, path: '/admin/order' },
+        { text: 'User', icon: <GroupIcon />, path: '/admin/user' },
+        { text: 'Blog', icon: <ArticleIcon />, path: '/blog' },
+        { text: 'Mail', icon: <MailIcon />, path: '/mail' },
+        { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
     ];
 
     return (

@@ -1,31 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Order.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
+
+import * as orderService from '~/services/orderService';
 
 const cx = classNames.bind(styles);
 
 const Order = () => {
-    const initialOrders = [
-        // Dữ liệu mẫu
-        { id: 1, customerName: 'John Doe', orderDate: '2024-05-20', status: 'Pending' },
-        { id: 2, customerName: 'Jane Smith', orderDate: '2024-05-19', status: 'Completed' },
-        { id: 3, customerName: 'Bob Johnson', orderDate: '2024-05-18', status: 'Shipped' },
-        { id: 4, customerName: 'Alice Brown', orderDate: '2024-05-17', status: 'Pending' },
-        { id: 5, customerName: 'Charlie Davis', orderDate: '2024-05-16', status: 'Completed' },
-        { id: 6, customerName: 'Dave Wilson', orderDate: '2024-05-15', status: 'Shipped' },
-        // Thêm nhiều dữ liệu mẫu để test
-    ];
-
-    const [orders, setOrders] = useState(initialOrders);
+    const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 5;
 
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    useEffect(() => {
+        orderService
+            .getOrderAll()
+            .then((res) => {
+                // Group orders by ID
+                const groupedOrders = res.reduce((acc, order) => {
+                    console.log(res);
+                    const existingOrder = acc.find((o) => o.id === order.id);
+                    if (existingOrder) {
+                        // Add order detail to existing order
+                        existingOrder.OrderDetail.push(order.OrderDetail);
+                    } else {
+                        // Add new order
+                        acc.push({ ...order, OrderDetail: [order.OrderDetail] });
+                    }
+                    return acc;
+                }, []);
+                setOrders(groupedOrders);
+            })
+            .catch((error) => {
+                console.error('Error fetching user data:', error);
+            });
+    }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredOrders = orders.filter(
+        (order) =>
+            order.Customer &&
+            order.Customer.fullName &&
+            order.Customer.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const handleViewOrder = (order) => {
         setSelectedOrder(order);
@@ -45,15 +74,30 @@ const Order = () => {
         setSelectedOrder(null);
     };
 
+    const formatOrderDate = (isoString) => {
+        const date = new Date(isoString);
+        return format(date, 'MMMM d, yyyy, h:mm a');
+    };
+
     return (
         <div className={cx('order-container')}>
             <h1>Order Management</h1>
+            <div className={cx('search-add')}>
+                <input
+                    type="text"
+                    placeholder="Search orders by customer name..."
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className={cx('search-input')}
+                />
+            </div>
             <table className={cx('order-table')}>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Customer Name</th>
                         <th>Order Date</th>
+                        <th>Total Amount</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -62,8 +106,9 @@ const Order = () => {
                     {currentOrders.map((order) => (
                         <tr key={order.id}>
                             <td>{order.id}</td>
-                            <td>{order.customerName}</td>
-                            <td>{order.orderDate}</td>
+                            <td>{order.name}</td>
+                            <td>{formatOrderDate(order.order_date)}</td>
+                            <td>{order.total_amount}</td>
                             <td>{order.status}</td>
                             <td className={cx('actions')}>
                                 <button onClick={() => handleViewOrder(order)} className={cx('action-button')}>
@@ -91,7 +136,7 @@ const Order = () => {
                 >
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
-                {[...Array(Math.ceil(orders.length / ordersPerPage)).keys()].map((number) => (
+                {[...Array(Math.ceil(filteredOrders.length / ordersPerPage)).keys()].map((number) => (
                     <button
                         key={number + 1}
                         onClick={() => paginate(number + 1)}
@@ -104,7 +149,7 @@ const Order = () => {
                 ))}
                 <button
                     onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === Math.ceil(orders.length / ordersPerPage)}
+                    disabled={currentPage === Math.ceil(filteredOrders.length / ordersPerPage)}
                     className={cx('pagination-button')}
                 >
                     <FontAwesomeIcon icon={faChevronRight} />
@@ -115,18 +160,29 @@ const Order = () => {
                 <div className={cx('overlay')}>
                     <div className={cx('detail-container')}>
                         <h2>Order Detail</h2>
-                        <p>
-                            <strong>ID:</strong> {selectedOrder.id}
-                        </p>
-                        <p>
-                            <strong>Customer Name:</strong> {selectedOrder.customerName}
-                        </p>
-                        <p>
-                            <strong>Order Date:</strong> {selectedOrder.orderDate}
-                        </p>
-                        <p>
-                            <strong>Status:</strong> {selectedOrder.status}
-                        </p>
+                        <table className={cx('order-detail-table')}>
+                            <thead>
+                                <tr>
+                                    <th>Shoe</th>
+
+                                    <th>Size</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedOrder.OrderDetail &&
+                                    selectedOrder.OrderDetail.map((detail) => (
+                                        <tr key={detail.id}>
+                                            <td>{detail.Shoes ? detail.Shoes.product_name : 'N/A'}</td>
+
+                                            <td>{detail.size}</td>
+                                            <td>{detail.quantity}</td>
+                                            <td>{detail.price}</td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
                         <button onClick={handleCloseDetail} className={cx('close-button')}>
                             Close
                         </button>

@@ -137,7 +137,15 @@ const Product = () => {
 
     // Calculate the range of products to display based on the current page
     const offset = currentPage * itemsPerPage;
-    const currentPageProducts = products.slice(offset, offset + itemsPerPage);
+
+    // Filter products based on the search term for both name and SKU
+    const filteredProducts = products.filter(
+        (product) =>
+            product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.sku.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const currentPageProducts = filteredProducts.slice(offset, offset + itemsPerPage);
 
     return (
         <div className={cx('product-container')}>
@@ -158,8 +166,8 @@ const Product = () => {
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>SKU</th>
                         <th>Price</th>
-                        <th>Discount Price</th>
                         <th>Stock</th>
                         <th>Gender</th>
                         <th>Active</th>
@@ -170,8 +178,8 @@ const Product = () => {
                     {currentPageProducts.map((product) => (
                         <tr key={product.id}>
                             <td>{product.product_name}</td>
+                            <td>{product.sku}</td>
                             <td>{product.price}</td>
-                            <td>{product.discount_price}</td>
                             <td>{product.stock_quantity}</td>
                             <td>{product.gender}</td>
                             <td>{product.active ? 'Yes' : 'No'}</td>
@@ -200,7 +208,7 @@ const Product = () => {
                 breakClassName={'break-me'}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
-                pageCount={Math.ceil(products.length / itemsPerPage)}
+                pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
                 onPageChange={handlePageClick}
                 containerClassName={cx('pagination')}
                 activeClassName={cx('active')}

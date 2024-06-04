@@ -14,6 +14,7 @@ const routes = {
     adminprofile: '/admin/profile',
     adminproduct: '/admin/product',
     order: '/admin/order',
+    user: '/admin/user',
 
     notFound: '/not-found',
 };

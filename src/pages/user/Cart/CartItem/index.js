@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { incrementQuantity, decrementQuantity, removeItem } from '~/redux/cartSlice';
+import { incrementQuantity, decrementQuantity, removeItem, updateSize } from '~/redux/cartSlice';
 import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './CartItem.module.scss';
@@ -34,6 +34,10 @@ function CartItem({ data }) {
             dispatch(decrementQuantity(data.id));
         }
     };
+    const handleSizeChange = (event) => {
+        const newSize = event.target.value;
+        dispatch(updateSize({ id: data.id, size: newSize }));
+    };
 
     return (
         <div className={cx('cart-item', 'css-48ks35')}>
@@ -55,7 +59,11 @@ function CartItem({ data }) {
                                     <label>Size</label>
                                     <div className={cx('css-123i213')}>
                                         <div className={cx('css-1ilkyak')}></div>
-                                        <select className={cx('css-46rwad')} onChange={(e) => {}} readOnly>
+                                        <select
+                                            className={cx('css-46rwad')}
+                                            value={data.selectedSize}
+                                            onChange={handleSizeChange}
+                                        >
                                             {data.Sizes.map((item) => (
                                                 <option key={item.id}>{item.size}</option>
                                             ))}
@@ -89,7 +97,10 @@ function CartItem({ data }) {
                                 </Button>
                             </li>
                             <li className={cx('css-1fqekfo')}>
-                                <Button className={cx('move_favourite')} onClick={() => dispatch(removeItem(data.id))}>
+                                <Button
+                                    className={cx('move_favourite')}
+                                    onClick={() => dispatch(removeItem({ id: data.id, size: data.selectedSize }))}
+                                >
                                     <FontAwesomeIcon icon={faTrashCan} />
                                 </Button>
                             </li>

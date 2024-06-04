@@ -25,10 +25,7 @@ function ProductList() {
                             <div key={product.id} className={cx('product-card', 'product-grid__card', 'css-1t0asop')}>
                                 <div className={cx('product-card__body')}>
                                     <figure>
-                                        <a
-                                            href="https://www.nike.com/vn/t/air-force-1-07-lv8-shoes-2gP9Bc/FN8349-100"
-                                            className={cx('product-card__link-overlay')}
-                                        >
+                                        <a href={'/product/' + product.id} className={cx('product-card__link-overlay')}>
                                             Nike Air Force 1 '07 LV8
                                         </a>
                                         <a

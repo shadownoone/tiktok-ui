@@ -177,15 +177,15 @@
     }
 }
 
-.menu-item:hover {
-    .menu-notification {
-        display: flex;
-        padding: 0 20%;
-        /* Hiển thị hoàn toàn */
-    }
+// .menu-item:hover {
+//     .menu-notification {
+//         display: flex;
+//         padding: 0 20%;
+//         /* Hiển thị hoàn toàn */
+//     }
 
-    /* Hiển thị .menu-notification khi hover vào .menu-item */
-}
+//     /* Hiển thị .menu-notification khi hover vào .menu-item */
+// }
 
 .menu-notification {
     display: none;

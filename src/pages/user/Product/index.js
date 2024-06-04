@@ -19,6 +19,7 @@ function Product() {
     const [listOfPosts, setListOfPosts] = useState();
     const [listImg, setListImg] = useState([]);
     const [listSize, setListSize] = useState([]);
+    const [items, setItems] = useState([]);
 
     const { id } = useParams();
 
@@ -31,33 +32,12 @@ function Product() {
     }, []);
 
     // Khởi tạo một mảng items để truyền cho SliderItem
-    const [items, setItems] = useState([
-        {
-            title: 'Product 1',
-            imageUrl:
-                'https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png',
-            url: 'https://example.com/product1',
-            subtitle: 'Description 1',
-            price: '$100',
-        },
-        {
-            title: 'Product 2',
-            imageUrl:
-                'https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png',
-            url: 'https://example.com/product2',
-            subtitle: 'Description 2',
-            price: '$150',
-        },
-        {
-            title: 'Product 3',
-            imageUrl:
-                'https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/86087b33-bcf3-44c7-ad14-7f6d42aff283/fff-2024-25-match-home-dri-fit-adv-football-authentic-shirt-JZCzQH.png',
-            url: 'https://example.com/product2',
-            subtitle: 'Description 2',
-            price: '$150',
-        },
-        // Thêm các mục khác nếu cần
-    ]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/shoes').then((response) => {
+            setItems(response.data.data);
+        });
+    }, []);
 
     return (
         <div>

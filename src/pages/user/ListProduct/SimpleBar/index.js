@@ -1,9 +1,18 @@
 import { React, useEffect, useState } from 'react';
 import styles from './SimpleBar.module.scss';
 import classNames from 'classnames/bind';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 function SimpleBar() {
+    const [listCategories, setListCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/categories').then((response) => {
+            setListCategories(response.data.data);
+        });
+    }, []);
+
     return (
         <div className={cx('ln-scroller')}>
             <div className={cx('simplebar-wrapper')} style={{ margin: '0px' }}>
@@ -15,32 +24,16 @@ function SimpleBar() {
                                     <nav className={cx('left-nav', 'categories-present', 'css-2sl1x4')}>
                                         <div className={cx('left-nav__categories')}>
                                             <div className={cx('categories', 'is--desktop', 'css-whzydw')}>
-                                                <div className={cx('categories__content')}>
-                                                    <a
-                                                        className={cx('is--link', 'categories__item', 'css-g9lrg8')}
-                                                        href="/"
-                                                    >
-                                                        Lifestyle
-                                                    </a>
-                                                    <a
-                                                        className={cx('is--link', 'categories__item', 'css-g9lrg8')}
-                                                        href="/"
-                                                    >
-                                                        Jordan
-                                                    </a>
-                                                    <a
-                                                        className={cx('is--link', 'categories__item', 'css-g9lrg8')}
-                                                        href="/"
-                                                    >
-                                                        Running
-                                                    </a>
-                                                    <a
-                                                        className={cx('is--link', 'categories__item', 'css-g9lrg8')}
-                                                        href="/"
-                                                    >
-                                                        Football
-                                                    </a>
-                                                </div>
+                                                {listCategories.map((categories, index) => (
+                                                    <div key={categories.id} className={cx('categories__content')}>
+                                                        <a
+                                                            className={cx('is--link', 'categories__item', 'css-g9lrg8')}
+                                                            href={'/listproduct/' + categories.id}
+                                                        >
+                                                            {categories.name}
+                                                        </a>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                         <div className={cx('left-nav__filters')}>
@@ -79,14 +72,22 @@ function SimpleBar() {
                                                             )}
                                                         >
                                                             <div className={cx('filter-group__items-group')}>
-                                                                <a href="/">
-                                                                    <div
-                                                                        className={cx('pseudo-checkbox', 'css-18pl6ws')}
-                                                                    ></div>
-                                                                    <span className={cx('filter-item__item-label')}>
-                                                                        Men
-                                                                    </span>
-                                                                </a>
+                                                                <input type="checkbox" href="/"></input>
+                                                                <span className={cx('filter-item__item-label')}>
+                                                                    Men
+                                                                </span>
+                                                            </div>
+                                                            <div className={cx('filter-group__items-group')}>
+                                                                <input type="checkbox" href="/"></input>
+                                                                <span className={cx('filter-item__item-label')}>
+                                                                    Women
+                                                                </span>
+                                                            </div>
+                                                            <div className={cx('filter-group__items-group')}>
+                                                                <input type="checkbox" href="/"></input>
+                                                                <span className={cx('filter-item__item-label')}>
+                                                                    Kids
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>

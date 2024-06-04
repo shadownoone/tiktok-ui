@@ -1,0 +1,69 @@
+/* styles.css */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Đảm bảo form nằm trên các phần khác */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 1000px;
+}
+
+.overlay form label {
+    font-weight: bold;
+}
+
+.overlay form .mb-3 {
+    margin-bottom: 1rem;
+}
+
+.overlay form .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.overlay form .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.overlay form .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.overlay form .btn-secondary:hover {
+    background-color: #545b62;
+    border-color: #545b62;
+}
+
+.overlay input[type='text'],
+.overlay input[type='email'],
+.overlay input[type='tel'] {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.overlay input[type='text']:focus,
+.overlay input[type='email']:focus,
+.overlay input[type='tel']:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.6);
+}

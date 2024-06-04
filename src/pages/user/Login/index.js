@@ -38,7 +38,7 @@ function Login() {
             }
         });
     };
-    console.log(user);
+
     return (
         <div className={cx('container')}>
             <div className={cx('container__login')}>

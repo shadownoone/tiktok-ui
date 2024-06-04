@@ -1,14 +1,16 @@
 import React from 'react';
-
 import styles from './Total.module.scss';
-
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
+
 function Total() {
     const cart = useSelector((state) => state.cart.cart);
+    const navigate = useNavigate(); // Use useNavigate hook
+
     const getTotal = () => {
         let totalQuantity = 0;
         let totalPrice = 0;
@@ -18,8 +20,13 @@ function Total() {
         });
         return { totalPrice, totalQuantity };
     };
+
     const formatPrice = (price) => {
         return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    };
+
+    const handleCheckout = () => {
+        navigate('/checkout'); // Use navigate function
     };
 
     return (
@@ -59,10 +66,10 @@ function Total() {
                     </span>
                 </div>
                 <div className={cx('css-1e78l50')}>
-                    <Button add_to_bag className={cx('btn-add-to-bag')}>
+                    <Button add_to_bag className={cx('btn-add-to-bag')} onClick={handleCheckout}>
                         Guest Checkout
                     </Button>
-                    <Button add_to_bag className={cx('btn-add-to-bag')}>
+                    <Button add_to_bag className={cx('btn-add-to-bag')} onClick={handleCheckout}>
                         Member Checkout
                     </Button>
                 </div>
