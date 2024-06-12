@@ -47,19 +47,19 @@ function Home() {
                         <CourseItem
                             imageSrc="https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_300,c_limit/85022c8a-8d21-41d6-929b-7f17ab6b624e/nike-just-do-it.png"
                             title="Nike Air Max Dn Coming Soon"
-                            buttonLink={config.routes.listproduct}
+                            buttonLink={'/listproduct/all'}
                             buttonText="Get Notified"
                         />
                         <CourseItem
                             imageSrc="https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_452,c_limit/666737a0-d8c0-41fa-9502-984aa9c0a4dd/nike-just-do-it.png"
                             title="Retro Running Shoes"
-                            buttonLink={config.routes.listproduct}
+                            buttonLink={'/listproduct/all'}
                             buttonText="Shop"
                         />
                         <CourseItem
                             imageSrc="https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_452,c_limit/4f79ad51-9f73-4b6e-a9d9-a0ac53493b90/nike-just-do-it.png"
                             title="From the J's Up"
-                            buttonLink={config.routes.listproduct}
+                            buttonLink={'/listproduct/all'}
                             buttonText="Shop"
                         />
                     </div>

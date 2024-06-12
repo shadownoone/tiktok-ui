@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import styles from './Checkout.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
@@ -22,8 +23,8 @@ function Checkout() {
     });
 
     const [customer, setCustomer] = useState(null);
-
     const userProfile = useSelector((state) => state.account);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         if (userProfile?.userInfo?.user?.id) {
@@ -77,7 +78,10 @@ function Checkout() {
 
             try {
                 await orderService.createOrder(orderData);
-                alert('Đặt hàng thành công!');
+                const confirmResult = window.confirm('Đặt hàng thành công! Bạn có muốn xem đơn hàng không?');
+                if (confirmResult) {
+                    navigate(`/manageorder/${customer.id}`);
+                }
             } catch (error) {
                 console.error('Error creating order:', error);
                 alert('Đặt hàng thất bại. Vui lòng thử lại.');

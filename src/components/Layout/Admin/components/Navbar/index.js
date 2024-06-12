@@ -17,7 +17,7 @@ function Navbar() {
         { text: 'Product', icon: <LocalMallIcon />, path: '/admin/product' },
         { text: 'Order', icon: <ListAltIcon />, path: '/admin/order' },
         { text: 'User', icon: <GroupIcon />, path: '/admin/user' },
-        { text: 'Blog', icon: <ArticleIcon />, path: '/blog' },
+        { text: 'Categories', icon: <ArticleIcon />, path: '/admin/categories' },
         { text: 'Mail', icon: <MailIcon />, path: '/mail' },
         { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
     ];

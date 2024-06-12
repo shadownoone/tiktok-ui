@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from 'react-paginate';
 import * as shoeService from '~/services/shoeService';
-import CreateAndUpdate from './CreateAndUpdate';
+import * as categoryService from '~/services/categoriesService';
+import ProductForm from './ProductForm';
 
 const cx = classNames.bind(styles);
 
 const Product = () => {
-    const [product, setProduct] = useState();
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [newProduct, setNewProduct] = useState({
@@ -25,11 +26,17 @@ const Product = () => {
         active: false,
         sizes: [],
         images: [],
+        categoryID: '',
     });
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [currentProductId, setCurrentProductId] = useState(null);
 
     useEffect(() => {
         shoeService.getProductAll().then((res) => {
             setProducts(res);
+        });
+        categoryService.getCategoriesAll().then((res) => {
+            setCategories(res);
         });
     }, []);
 
@@ -41,7 +48,28 @@ const Product = () => {
     };
 
     const handleAddProductClick = () => {
+        setNewProduct({
+            product_name: '',
+            sku: '',
+            description: '',
+            price: '',
+            discount_price: '',
+            stock_quantity: '',
+            gender: '',
+            active: false,
+            sizes: [],
+            images: [],
+            categoryID: '',
+        });
         setShowForm(true);
+        setIsUpdate(false);
+    };
+
+    const handleEditProductClick = (product) => {
+        setNewProduct(product);
+        setShowForm(true);
+        setIsUpdate(true);
+        setCurrentProductId(product.id);
     };
 
     const handleCloseForm = () => {
@@ -56,25 +84,15 @@ const Product = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (product) {
-            shoeService.updateProduct(product);
+        if (isUpdate) {
+            await shoeService.updateProduct(currentProductId, newProduct);
         } else {
-            shoeService.createProduct(newProduct);
-            setProducts([...products, { ...newProduct, id: products.length + 1 }]);
+            const createdProduct = await shoeService.createProduct(newProduct);
+            setProducts([...products, { ...createdProduct, id: products.length + 1 }]);
         }
         setShowForm(false);
-    };
-
-    const handleViewProduct = (id) => {
-        alert(`Viewing product with ID: ${id}`);
-    };
-
-    const handleUpdateProduct = (product) => {
-        setProduct(product);
-        setShowForm(true);
-        console.log(product);
     };
 
     const handleDeleteProduct = (id) => {
@@ -86,28 +104,26 @@ const Product = () => {
         setCurrentPage(selected);
     };
 
-    const handleAddSize = (e) => {
-        e.preventDefault();
-        setNewProduct({
-            ...newProduct,
-            sizes: [...newProduct.sizes, ''],
-        });
+    const handleAddSize = () => {
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            sizes: [...prevProduct.sizes, ''],
+        }));
     };
 
     const handleSizeChange = (index, value) => {
         const updatedSizes = newProduct.sizes.map((size, i) => (i === index ? value : size));
-        setNewProduct({
-            ...newProduct,
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
             sizes: updatedSizes,
-        });
+        }));
     };
 
     const handleRemoveSize = (index) => {
-        const updatedSizes = newProduct.sizes.filter((_, i) => i !== index);
-        setNewProduct({
-            ...newProduct,
-            sizes: updatedSizes,
-        });
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            sizes: prevProduct.sizes.filter((_, i) => i !== index),
+        }));
     };
 
     const handleAddImage = () => {
@@ -118,82 +134,69 @@ const Product = () => {
     };
 
     const handleImageChange = (index, value) => {
-        const newImages = [...newProduct.images];
-        newImages[index] = value;
+        const updatedImages = newProduct.images.map((image, i) => (i === index ? value : image));
         setNewProduct((prevProduct) => ({
             ...prevProduct,
-            images: newImages,
+            images: updatedImages,
         }));
     };
 
     const handleRemoveImage = (index) => {
-        const newImages = [...newProduct.images];
-        newImages.splice(index, 1);
         setNewProduct((prevProduct) => ({
             ...prevProduct,
-            images: newImages,
+            images: prevProduct.images.filter((_, i) => i !== index),
         }));
     };
 
-    // Calculate the range of products to display based on the current page
-    const offset = currentPage * itemsPerPage;
-
-    // Filter products based on the search term for both name and SKU
-    const filteredProducts = products.filter(
-        (product) =>
-            product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            product.sku.toLowerCase().includes(searchTerm.toLowerCase()),
+    const filteredProducts = products.filter((product) =>
+        product.product_name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
-    const currentPageProducts = filteredProducts.slice(offset, offset + itemsPerPage);
+    const paginatedProducts = filteredProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
     return (
-        <div className={cx('product-container')}>
-            <h1>Product Management</h1>
-            <div className={cx('search-add')}>
-                <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className={cx('search-input')}
-                />
-                <button onClick={handleAddProductClick} className={cx('add-button')}>
-                    Add Product
-                </button>
+        <div className={cx('wrapper')}>
+            <div className={cx('header')}>
+                <h1>Product</h1>
+                <div className={cx('actions')}>
+                    <button className={cx('button')} onClick={handleAddProductClick}>
+                        Add Product
+                    </button>
+                </div>
             </div>
-            <table className={cx('product-table')}>
+            <input
+                className={cx('search')}
+                type="text"
+                placeholder="Search by product name"
+                value={searchTerm}
+                onChange={handleSearch}
+            />
+            <table className={cx('table')}>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>SKU</th>
+                        <th>Id</th>
+                        <th>Product Name</th>
                         <th>Price</th>
-                        <th>Stock</th>
+                        <th>SKU</th>
                         <th>Gender</th>
-                        <th>Active</th>
-                        <th>Actions</th>
+                        <th>Category</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {currentPageProducts.map((product) => (
+                    {paginatedProducts.map((product, index) => (
                         <tr key={product.id}>
+                            <td>{currentPage * itemsPerPage + index + 1}</td>
                             <td>{product.product_name}</td>
-                            <td>{product.sku}</td>
                             <td>{product.price}</td>
-                            <td>{product.stock_quantity}</td>
+                            <td>{product.sku}</td>
                             <td>{product.gender}</td>
-                            <td>{product.active ? 'Yes' : 'No'}</td>
+                            <td>{product.Category?.name}</td>
                             <td className={cx('actions')}>
-                                <button onClick={() => handleViewProduct(product.id)} className={cx('action-button')}>
-                                    <FontAwesomeIcon icon={faEye} />
-                                </button>
-                                <button onClick={() => handleUpdateProduct(product)} className={cx('action-button')}>
+                                <button className={cx('action-button')} onClick={() => handleEditProductClick(product)}>
                                     <FontAwesomeIcon icon={faEdit} />
                                 </button>
-                                <button
-                                    onClick={() => handleDeleteProduct(product.id)}
-                                    className={cx('action-button', 'delete-button')}
-                                >
+                                <button className={cx('action-button')} onClick={() => handleDeleteProduct(product.id)}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </button>
                             </td>
@@ -202,20 +205,19 @@ const Product = () => {
                 </tbody>
             </table>
             <ReactPaginate
-                previousLabel={'previous'}
-                nextLabel={'next'}
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
                 breakLabel={'...'}
-                breakClassName={'break-me'}
+                pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
-                pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
                 onPageChange={handlePageClick}
                 containerClassName={cx('pagination')}
                 activeClassName={cx('active')}
             />
-            <CreateAndUpdate
+            <ProductForm
                 showForm={showForm}
-                newProduct={product || newProduct}
+                product={newProduct}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 handleCloseForm={handleCloseForm}
@@ -225,6 +227,8 @@ const Product = () => {
                 handleAddImage={handleAddImage}
                 handleImageChange={handleImageChange}
                 handleRemoveImage={handleRemoveImage}
+                isUpdate={isUpdate}
+                categories={categories} // Pass categories to ProductForm
             />
         </div>
     );

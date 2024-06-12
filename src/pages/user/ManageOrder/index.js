@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Order.module.scss';
+import styles from './ManageOrder.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 import * as orderService from '~/services/orderService';
+import { useSelector } from 'react-redux';
+import * as userService from '~/services/userService';
 
 const cx = classNames.bind(styles);
 
-const Order = () => {
+const ManageOrder = () => {
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 5;
 
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const userProfile = useSelector((state) => state.account);
 
     useEffect(() => {
-        orderService
-            .getOrderAll()
-            .then((res) => {
-                // Group orders by ID
-                const groupedOrders = res.reduce((acc, order) => {
-                    const existingOrder = acc.find((o) => o.id === order.id);
-                    if (existingOrder) {
-                        // Add order detail to existing order
-                        existingOrder.OrderDetail.push(order.OrderDetail);
-                    } else {
-                        // Add new order
-                        acc.push({ ...order, OrderDetail: [order.OrderDetail] });
-                    }
-                    return acc;
-                }, []);
-                setOrders(groupedOrders);
-            })
-            .catch((error) => {
-                console.error('Error fetching user data:', error);
-            });
-    }, []);
+        if (userProfile?.userInfo?.user?.id) {
+            orderService
+                .getOrderByCustomerID(userProfile.userInfo.user.id)
+                .then((res) => {
+                    // Group orders by ID
+                    const groupedOrders = res.reduce((acc, order) => {
+                        const existingOrder = acc.find((o) => o.id === order.id);
+                        if (existingOrder) {
+                            // Add order detail to existing order
+                            existingOrder.OrderDetail.push(order.OrderDetail);
+                        } else {
+                            // Add new order
+                            acc.push({ ...order, OrderDetail: [order.OrderDetail] });
+                        }
+                        return acc;
+                    }, []);
+                    setOrders(groupedOrders);
+                })
+                .catch((error) => {
+                    console.error('Error fetching orders:', error);
+                });
+        }
+    }, [userProfile]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -52,51 +55,17 @@ const Order = () => {
             order.Customer.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const handleViewOrder = (order) => {
         setSelectedOrder(order);
     };
 
-    const handleEditOrder = (id) => {
-        alert(`Editing order with ID: ${id}`);
-    };
-
     const handleDeleteOrder = (id) => {
         orderService.deleteOrder(id);
         setOrders(orders.filter((order) => order.id !== id));
-    };
-
-    const handleChangeOrderStatus = (orderId, status) => {
-        orderService
-            .updateOrderStatus(orderId, status)
-            .then((updatedOrder) => {
-                setOrders((prevOrders) =>
-                    prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order)),
-                );
-                switch (status) {
-                    case 'pending':
-                        alert('Bạn đã chọn trạng thái: Pending');
-                        break;
-                    case 'confirmed':
-                        alert('Bạn đã chọn trạng thái: Confirmed');
-                        break;
-                    case 'shipped':
-                        alert('Bạn đã chọn trạng thái: Shipped');
-                        break;
-                    case 'delivered':
-                        alert('Bạn đã chọn trạng thái: Delivered');
-                        break;
-                    case 'canceled':
-                        alert('Bạn đã chọn trạng thái: Canceled');
-                        break;
-                    default:
-                        break;
-                }
-            })
-            .catch((error) => {
-                console.error('Error updating order status:', error);
-            });
     };
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -116,7 +85,7 @@ const Order = () => {
 
     return (
         <div className={cx('order-container')}>
-            <h1>Order Management</h1>
+            <h1>Your Orders</h1>
             <div className={cx('search-add')}>
                 <input
                     type="text"
@@ -146,25 +115,12 @@ const Order = () => {
                             <td>{formatOrderDate(order.order_date)}</td>
                             <td>{formatPrice(order.total_amount)}</td>
                             <td>{order.address}</td>
-                            <td>
-                                <select
-                                    value={order.status}
-                                    onChange={(e) => handleChangeOrderStatus(order.id, e.target.value)}
-                                >
-                                    <option value="pending">Pending</option>
-                                    <option value="confirmed">Confirmed</option>
-                                    <option value="shipped">Shipped</option>
-                                    <option value="delivered">Delivered</option>
-                                    <option value="canceled">Canceled</option>
-                                </select>
-                            </td>
+                            <td>{order.status}</td>
                             <td className={cx('actions')}>
                                 <button onClick={() => handleViewOrder(order)} className={cx('action-button')}>
                                     <FontAwesomeIcon icon={faEye} />
                                 </button>
-                                <button onClick={() => handleEditOrder(order.id)} className={cx('action-button')}>
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
+
                                 <button
                                     onClick={() => handleDeleteOrder(order.id)}
                                     className={cx('action-button', 'delete-button')}
@@ -239,4 +195,4 @@ const Order = () => {
     );
 };
 
-export default Order;
+export default ManageOrder;

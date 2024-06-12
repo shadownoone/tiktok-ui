@@ -13,7 +13,7 @@ function NavSub({ title }) {
             <div>
                 <ul className={cx('list-sub')}>
                     <li className={cx('sub-item')}>
-                        <a href={config.routes.listproduct}>Shoes</a>
+                        <a href={'/listproduct/all'}>Shoes</a>
                     </li>
                     <li className={cx('sub-item')}>
                         <a href={config.routes.listproduct}>Clothing</a>

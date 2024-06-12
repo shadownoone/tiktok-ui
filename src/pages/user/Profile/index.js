@@ -53,7 +53,10 @@ export default function Profile() {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardImage
-                                    src={customer.account_customer.profileImageUrl}
+                                    src={
+                                        customer.account_customer.profileImageUrl ||
+                                        'https://i.pinimg.com/236x/3a/67/19/3a67194f5897030237d83289372cf684.jpg'
+                                    }
                                     alt="avatar"
                                     className="rounded-circle"
                                     style={{ width: '150px' }}

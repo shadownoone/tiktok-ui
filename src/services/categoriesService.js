@@ -20,4 +20,8 @@ const updateCategories = async (data) => {
     return await httpRequest.put('/categories/', data.id, data).then((res) => res.data);
 };
 
-export { getCategoriesById, getCategoriesAll, createCategories, updateCategories };
+const deleteCategories = async (id) => {
+    return await httpRequest.delete('/categories/' + id).then((res) => res.data);
+};
+
+export { getCategoriesById, getCategoriesAll, createCategories, updateCategories, deleteCategories };

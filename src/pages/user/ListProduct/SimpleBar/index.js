@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import styles from './SimpleBar.module.scss';
 import classNames from 'classnames/bind';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function SimpleBar() {
@@ -26,12 +27,12 @@ function SimpleBar() {
                                             <div className={cx('categories', 'is--desktop', 'css-whzydw')}>
                                                 {listCategories.map((categories, index) => (
                                                     <div key={categories.id} className={cx('categories__content')}>
-                                                        <a
+                                                        <Link
                                                             className={cx('is--link', 'categories__item', 'css-g9lrg8')}
-                                                            href={'/listproduct/' + categories.id}
+                                                            to={'/listproduct/' + categories.id}
                                                         >
                                                             {categories.name}
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                 ))}
                                             </div>

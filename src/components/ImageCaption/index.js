@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function ImageCaption({ imageSrc, subTitle, title, desc, mainTitle, buttonLink, buttonText }) {
     return (
         <div>
-            <a href={config.routes.listproduct}>
+            <a href={'/listproduct/all'}>
                 <h2 className={cx('mg-bt-24')}>{mainTitle}</h2>
                 <img src={imageSrc} alt="" />
                 <Caption

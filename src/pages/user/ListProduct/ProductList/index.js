@@ -1,18 +1,21 @@
 import { React, useEffect, useState } from 'react';
 import styles from './ProductList.module.scss';
 import classNames from 'classnames/bind';
-
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import * as shoesService from '~/services/shoeService';
 
 const cx = classNames.bind(styles);
 function ProductList() {
     const [listOfPosts, setListOfPosts] = useState([]);
+    const { categoryID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/shoes').then((response) => {
-            setListOfPosts(response.data.data);
+        shoesService.getProductAll(categoryID === 'all' ? '' : categoryID).then((response) => {
+            console.log(response);
+            setListOfPosts(response);
         });
-    }, []);
+    }, [categoryID]);
+
     const formatPrice = (price) => {
         return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
     };

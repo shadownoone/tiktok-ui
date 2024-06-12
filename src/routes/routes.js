@@ -11,6 +11,8 @@ import Register from '~/pages/user/Register';
 import Men from '~/pages/user/Men';
 import Women from '~/pages/user/Women';
 import Profile from '~/pages/user/Profile';
+import ManageOrder from '~/pages/user/ManageOrder';
+import Invoice from '~/pages/user/Invoice';
 
 import AdminLayout from '~/components/Layout/Admin/AdminLayout';
 import Dashboard from '~/pages/admin/Dashboard';
@@ -18,6 +20,7 @@ import AdminProfile from '~/pages/admin/Profile';
 import AdminProduct from '~/pages/admin/Product';
 import Order from '~/pages/admin/Order';
 import User from '~/pages/admin/User';
+import Categories from '~/pages/admin/Categories';
 
 const publicRoutes = [
     {
@@ -60,6 +63,14 @@ const publicRoutes = [
         path: config.routes.checkout,
         component: Checkout,
     },
+    {
+        path: config.routes.manageorder,
+        component: ManageOrder,
+    },
+    {
+        path: config.routes.invoice,
+        component: Invoice,
+    },
 
     //
     {
@@ -85,6 +96,11 @@ const publicRoutes = [
     {
         path: config.routes.user,
         component: User,
+        layout: AdminLayout,
+    },
+    {
+        path: config.routes.categories,
+        component: Categories,
         layout: AdminLayout,
     },
 ];

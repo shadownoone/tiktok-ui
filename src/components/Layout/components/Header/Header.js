@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
@@ -11,13 +11,26 @@ import Search from '../Search';
 import config from '~/config';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '~/redux/accountSlice';
+import * as userService from '~/services/userService';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+    const [customer, setCustomer] = useState(null);
+    const userProfile = useSelector((state) => state.account);
     const cart = useSelector((state) => state?.cart?.cart) || [];
     const isLogin = useSelector((state) => state.account.isLogin);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (userProfile?.userInfo?.user?.id) {
+            console.log(userProfile?.userInfo?.user?.id);
+            userService.getUserById(userProfile.userInfo.user.id).then((res) => {
+                setCustomer(res.data);
+                console.log(res);
+            });
+        }
+    }, [userProfile]);
 
     const getTotalQuantity = () => {
         let total = 0;
@@ -32,6 +45,7 @@ function Header() {
         // Xử lý đăng xuất, ví dụ: đặt isLoggedIn về false và làm các công việc khác (ví dụ: xóa token khỏi localStorage)
         dispatch(userLogout());
     };
+
     return (
         <div>
             <header className={cx('header-container')}>
@@ -92,7 +106,7 @@ function Header() {
                                             <a href={config.routes.profile}>Profile</a>
                                         </li>
                                         <li className={cx('sub-menu-item')}>
-                                            <a href="/">Orders</a>
+                                            <a href={'/manageorder/' + userProfile?.userInfo?.user?.id}>Orders</a>
                                         </li>
                                         <li className={cx('sub-menu-item')}>
                                             <a href="/">Favourites</a>

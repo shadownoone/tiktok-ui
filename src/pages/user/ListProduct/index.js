@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React, { useState } from 'react';
 import styles from './ListProduct.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
@@ -9,7 +9,14 @@ import ProductList from './ProductList';
 import SimpleBar from './SimpleBar';
 
 const cx = classNames.bind(styles);
+
 function ListProduct() {
+    const [showSimpleBar, setShowSimpleBar] = useState(true);
+
+    const toggleSimpleBar = () => {
+        setShowSimpleBar(!showSimpleBar);
+    };
+
     return (
         <div className={cx('wall', 'css-1s0cf0f')}>
             <div className={cx('results', 'css-1qezlf9')}>
@@ -19,7 +26,7 @@ function ListProduct() {
                         <div className={cx('wall-header__content')}>
                             <h1 className={cx('wall-header__title', 'css-r2u0ax')}>List Product</h1>
                             <nav className={cx('wall-header__nav')}>
-                                <Button className={cx('css-1oqgtvq')}>
+                                <Button className={cx('css-1oqgtvq')} onClick={toggleSimpleBar}>
                                     <span className={cx('filters-btn__filter_text')}>Hide Filters</span>
                                     <FontAwesomeIcon style={{ color: '#111' }} icon={faSliders} />
                                 </Button>
@@ -40,7 +47,7 @@ function ListProduct() {
                 {/* Results */}
                 <div className={cx('results__body')}>
                     {/* SimpleBar */}
-                    <SimpleBar />
+                    {showSimpleBar && <SimpleBar />}
 
                     {/* List Product */}
                     <ProductList />

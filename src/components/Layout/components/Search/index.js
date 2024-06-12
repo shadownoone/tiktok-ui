@@ -1,3 +1,4 @@
+// Search.js
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,6 +6,8 @@ import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import SearchResult from './SearchResult'; // Import SearchResult component
 import styles from './Search.module.scss';
 import images from '~/assets/images';
+
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +17,14 @@ function Search() {
     const [searchInput, setSearchInput] = useState('');
     const overlayRef = useRef(null);
     const inputRef = useRef(null);
+    const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/shoes').then((response) => {
+            setItems(response.data.data);
+        });
+    }, []);
 
     const handleSearchClick = () => {
         setShowOverlay(true);
@@ -28,9 +39,15 @@ function Search() {
     };
 
     const handleInputChange = (event) => {
-        const inputValue = event.target.value;
+        const inputValue = event.target.value.toLowerCase(); // Convert input to lowercase
         setIsTyping(inputValue !== '');
-        setSearchInput(inputValue);
+        setSearchInput(event.target.value);
+        // Filter items based on search input matching product name or SKU (case-insensitive)
+        const filtered = items.filter(
+            (item) =>
+                item.product_name.toLowerCase().includes(inputValue) || item.sku.toLowerCase().includes(inputValue),
+        );
+        setFilteredItems(filtered);
     };
 
     const handleCancelClick = () => {
@@ -87,7 +104,7 @@ function Search() {
                                     </button>
                                 </div>
                                 {/* Use SearchResult component */}
-                                <SearchResult isTyping={isTyping} />
+                                <SearchResult isTyping={isTyping} filteredItems={filteredItems} />
                             </div>
                         </div>
                     </div>
