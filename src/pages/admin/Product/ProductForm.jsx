@@ -17,7 +17,7 @@ const ProductForm = ({
         active: false,
         sizes: [],
         images: [],
-        categoryID: '', // Add default categoryID
+        categoryID: '',
     },
     handleChange,
     handleSubmit,
@@ -29,7 +29,7 @@ const ProductForm = ({
     handleImageChange,
     handleRemoveImage,
     isUpdate = false,
-    categories, // Add categories prop
+    categories,
 }) => {
     return (
         showForm && (
@@ -56,7 +56,7 @@ const ProductForm = ({
                             <input type="number" name="price" value={product.price} onChange={handleChange} required />
                         </label>
                         <label>
-                            DiscountPrice:
+                            Discount Price:
                             <input
                                 type="number"
                                 name="discount_price"

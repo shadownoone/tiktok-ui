@@ -10,7 +10,7 @@ const routes = {
     register: '/register',
     profile: '/profile',
     manageorder: '/manageorder/:customerId',
-    invoice: '/invoice/:customerId',
+    invoice: '/invoice/:id',
 
     dashboard: '/admin/dashboard',
     adminprofile: '/admin/profile',

@@ -24,10 +24,8 @@ function Header() {
 
     useEffect(() => {
         if (userProfile?.userInfo?.user?.id) {
-            console.log(userProfile?.userInfo?.user?.id);
             userService.getUserById(userProfile.userInfo.user.id).then((res) => {
                 setCustomer(res.data);
-                console.log(res);
             });
         }
     }, [userProfile]);

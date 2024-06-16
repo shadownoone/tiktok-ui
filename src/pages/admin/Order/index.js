@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Order.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faReceipt, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { format } from 'date-fns';
 import * as orderService from '~/services/orderService';
 
@@ -14,22 +16,22 @@ const Order = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 5;
-
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const navigate = useNavigate();
 
     useEffect(() => {
+        fetchOrders();
+    }, []);
+
+    const fetchOrders = () => {
         orderService
             .getOrderAll()
             .then((res) => {
-                // Group orders by ID
+                // Process the fetched orders to group them by id
                 const groupedOrders = res.reduce((acc, order) => {
                     const existingOrder = acc.find((o) => o.id === order.id);
                     if (existingOrder) {
-                        // Add order detail to existing order
                         existingOrder.OrderDetail.push(order.OrderDetail);
                     } else {
-                        // Add new order
                         acc.push({ ...order, OrderDetail: [order.OrderDetail] });
                     }
                     return acc;
@@ -37,9 +39,9 @@ const Order = () => {
                 setOrders(groupedOrders);
             })
             .catch((error) => {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching orders:', error);
             });
-    }, []);
+    };
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -52,19 +54,26 @@ const Order = () => {
             order.Customer.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const handleViewOrder = (order) => {
         setSelectedOrder(order);
     };
-
-    const handleEditOrder = (id) => {
-        alert(`Editing order with ID: ${id}`);
+    const handleCloseDetail = () => {
+        setSelectedOrder(null);
     };
 
     const handleDeleteOrder = (id) => {
-        orderService.deleteOrder(id);
-        setOrders(orders.filter((order) => order.id !== id));
+        orderService
+            .deleteOrder(id)
+            .then(() => {
+                setOrders(orders.filter((order) => order.id !== id));
+            })
+            .catch((error) => {
+                console.error('Error deleting order:', error);
+            });
     };
 
     const handleChangeOrderStatus = (orderId, status) => {
@@ -74,35 +83,15 @@ const Order = () => {
                 setOrders((prevOrders) =>
                     prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order)),
                 );
-                switch (status) {
-                    case 'pending':
-                        alert('Bạn đã chọn trạng thái: Pending');
-                        break;
-                    case 'confirmed':
-                        alert('Bạn đã chọn trạng thái: Confirmed');
-                        break;
-                    case 'shipped':
-                        alert('Bạn đã chọn trạng thái: Shipped');
-                        break;
-                    case 'delivered':
-                        alert('Bạn đã chọn trạng thái: Delivered');
-                        break;
-                    case 'canceled':
-                        alert('Bạn đã chọn trạng thái: Canceled');
-                        break;
-                    default:
-                        break;
-                }
+                alert(`Bạn đã chọn trạng thái: ${status}`);
             })
             .catch((error) => {
                 console.error('Error updating order status:', error);
             });
     };
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const handleCloseDetail = () => {
-        setSelectedOrder(null);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
     };
 
     const formatOrderDate = (isoString) => {
@@ -162,9 +151,9 @@ const Order = () => {
                                 <button onClick={() => handleViewOrder(order)} className={cx('action-button')}>
                                     <FontAwesomeIcon icon={faEye} />
                                 </button>
-                                <button onClick={() => handleEditOrder(order.id)} className={cx('action-button')}>
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
+                                <Link to={`/invoice/${order.id}`} className={cx('action-button')}>
+                                    <FontAwesomeIcon icon={faReceipt} />
+                                </Link>
                                 <button
                                     onClick={() => handleDeleteOrder(order.id)}
                                     className={cx('action-button', 'delete-button')}
@@ -182,7 +171,7 @@ const Order = () => {
                     disabled={currentPage === 1}
                     className={cx('pagination-button')}
                 >
-                    <FontAwesomeIcon icon={faChevronLeft} />
+                    Prev
                 </button>
                 {[...Array(Math.ceil(filteredOrders.length / ordersPerPage)).keys()].map((number) => (
                     <button
@@ -200,7 +189,7 @@ const Order = () => {
                     disabled={currentPage === Math.ceil(filteredOrders.length / ordersPerPage)}
                     className={cx('pagination-button')}
                 >
-                    <FontAwesomeIcon icon={faChevronRight} />
+                    Next
                 </button>
             </div>
 

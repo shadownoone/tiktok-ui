@@ -29,7 +29,7 @@ function Checkout() {
     useEffect(() => {
         if (userProfile?.userInfo?.user?.id) {
             userService.getUserById(userProfile.userInfo.user.id).then((res) => {
-                setCustomer(res.data);
+                setCustomer(res.data.account_customer);
             });
         }
     }, [userProfile]);
@@ -64,6 +64,7 @@ function Checkout() {
         event.preventDefault();
 
         if (isFormFilled && customer) {
+            console.log(customer);
             const orderData = {
                 customer_id: customer.id, // Use the ID from the authenticated user
                 order_date: new Date().toISOString(),

@@ -31,10 +31,13 @@ const Product = () => {
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentProductId, setCurrentProductId] = useState(null);
 
+    const fetchProducts = async () => {
+        const res = await shoeService.getProductAll();
+        setProducts(res);
+    };
+
     useEffect(() => {
-        shoeService.getProductAll().then((res) => {
-            setProducts(res);
-        });
+        fetchProducts();
         categoryService.getCategoriesAll().then((res) => {
             setCategories(res);
         });
@@ -66,7 +69,7 @@ const Product = () => {
     };
 
     const handleEditProductClick = (product) => {
-        setNewProduct(product);
+        setNewProduct({ ...product }); // Sao chép đối tượng sản phẩm
         setShowForm(true);
         setIsUpdate(true);
         setCurrentProductId(product.id);
@@ -86,18 +89,19 @@ const Product = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (isUpdate) {
             await shoeService.updateProduct(currentProductId, newProduct);
         } else {
-            const createdProduct = await shoeService.createProduct(newProduct);
-            setProducts([...products, { ...createdProduct, id: products.length + 1 }]);
+            await shoeService.createProduct(newProduct);
         }
         setShowForm(false);
+        fetchProducts(); // Tải lại sản phẩm sau khi cập nhật hoặc tạo mới
     };
 
-    const handleDeleteProduct = (id) => {
-        shoeService.deleteProduct(id);
-        setProducts(products.filter((product) => product.id !== id));
+    const handleDeleteProduct = async (id) => {
+        await shoeService.deleteProduct(id);
+        fetchProducts(); // Tải lại sản phẩm sau khi xóa
     };
 
     const handlePageClick = ({ selected }) => {
@@ -152,6 +156,10 @@ const Product = () => {
         product.product_name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    };
+
     const paginatedProducts = filteredProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
     return (
@@ -188,7 +196,7 @@ const Product = () => {
                         <tr key={product.id}>
                             <td>{currentPage * itemsPerPage + index + 1}</td>
                             <td>{product.product_name}</td>
-                            <td>{product.price}</td>
+                            <td>{formatPrice(product.price)}</td>
                             <td>{product.sku}</td>
                             <td>{product.gender}</td>
                             <td>{product.Category?.name}</td>

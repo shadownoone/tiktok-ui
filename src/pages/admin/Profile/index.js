@@ -12,6 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 import * as userService from '~/services/userService';
 import UpdateProfileForm from './Update'; // Import UpdateProfileForm component
+import { format } from 'date-fns';
 
 import './styles.css'; // Import CSS file
 
@@ -44,6 +45,11 @@ export default function Profile() {
     if (!customer) {
         return <div>Loading...</div>;
     }
+
+    const formatOrderDate = (isoString) => {
+        const date = new Date(isoString);
+        return format(date, 'MMMM d, yyyy, h:mm a');
+    };
 
     return (
         <section style={{ backgroundColor: '#eee' }}>
@@ -128,7 +134,7 @@ export default function Profile() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            {customer.account_customer.createdAt}
+                                            {formatOrderDate(customer.account_customer.createdAt)}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>

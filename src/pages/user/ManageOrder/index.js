@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams
 import classNames from 'classnames/bind';
 import styles from './ManageOrder.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 import * as orderService from '~/services/orderService';
-import { useSelector } from 'react-redux';
 import * as userService from '~/services/userService';
 
 const cx = classNames.bind(styles);
@@ -15,34 +15,44 @@ const ManageOrder = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [customer, setCustomer] = useState(null);
+    const { customerId } = useParams(); // Get customer ID from URL
     const ordersPerPage = 5;
 
-    const userProfile = useSelector((state) => state.account);
-
     useEffect(() => {
-        if (userProfile?.userInfo?.user?.id) {
-            orderService
-                .getOrderByCustomerID(userProfile.userInfo.user.id)
+        if (customerId) {
+            userService
+                .getUserById(customerId)
                 .then((res) => {
-                    // Group orders by ID
-                    const groupedOrders = res.reduce((acc, order) => {
-                        const existingOrder = acc.find((o) => o.id === order.id);
-                        if (existingOrder) {
-                            // Add order detail to existing order
-                            existingOrder.OrderDetail.push(order.OrderDetail);
-                        } else {
-                            // Add new order
-                            acc.push({ ...order, OrderDetail: [order.OrderDetail] });
-                        }
-                        return acc;
-                    }, []);
-                    setOrders(groupedOrders);
+                    console.log(res.data.account_customer);
+                    setCustomer(res.data.account_customer);
+                    return res.data.account_customer.accountID;
+                })
+                .then((customerId) => {
+                    orderService
+                        .getOrderByCustomerID(customerId)
+                        .then((res) => {
+                            console.log(res);
+                            const groupedOrders = res.reduce((acc, order) => {
+                                const existingOrder = acc.find((o) => o.id === order.id);
+                                if (existingOrder) {
+                                    existingOrder.OrderDetail.push(order.OrderDetail);
+                                } else {
+                                    acc.push({ ...order, OrderDetail: [order.OrderDetail] });
+                                }
+                                return acc;
+                            }, []);
+                            setOrders(groupedOrders);
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching orders:', error);
+                        });
                 })
                 .catch((error) => {
-                    console.error('Error fetching orders:', error);
+                    console.error('Error fetching customer:', error);
                 });
         }
-    }, [userProfile]);
+    }, [customerId]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -120,7 +130,6 @@ const ManageOrder = () => {
                                 <button onClick={() => handleViewOrder(order)} className={cx('action-button')}>
                                     <FontAwesomeIcon icon={faEye} />
                                 </button>
-
                                 <button
                                     onClick={() => handleDeleteOrder(order.id)}
                                     className={cx('action-button', 'delete-button')}
@@ -159,7 +168,6 @@ const ManageOrder = () => {
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
             </div>
-
             {selectedOrder && (
                 <div className={cx('overlay')}>
                     <div className={cx('detail-container')}>

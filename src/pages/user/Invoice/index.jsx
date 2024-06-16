@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
     MDBCard,
     MDBCardBody,
@@ -12,8 +13,62 @@ import {
     MDBTableHead,
     MDBTableBody,
 } from 'mdb-react-ui-kit';
+import axios from 'axios';
 
-export default function App() {
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('vi-VN').format(price) + '₫';
+};
+
+const PrintInvoice = () => {
+    const { id } = useParams();
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orderDetail, setOrderDetail] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchOrder = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/orders/invoice/${id}`);
+                let resData = response.data.data;
+                console.log('Fetched Order:', resData.OrderDetail);
+                setSelectedOrder(response.data);
+                setOrderDetail(() => {
+                    return [resData.OrderDetail];
+                });
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching order:', error);
+                setError('Error fetching order data');
+                setLoading(false);
+            }
+        };
+
+        fetchOrder();
+    }, [id]);
+
+    console.log(orderDetail);
+    const formatOrderDate = (isoString) => {
+        const date = new Date(isoString);
+        return date.toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
+    if (!selectedOrder) {
+        return <div>No order data found</div>;
+    }
+
     return (
         <MDBContainer className="py-5">
             <MDBCard className="p-4 shadow-5">
@@ -33,6 +88,7 @@ export default function App() {
                                     ripple="dark"
                                     className="text-capitalize me-2"
                                     style={{ fontSize: '1.6rem', padding: '10px 20px' }}
+                                    onClick={() => window.print()}
                                 >
                                     <MDBIcon fas icon="print" className="me-2" />
                                     Print
@@ -42,6 +98,9 @@ export default function App() {
                                     ripple="dark"
                                     className="text-capitalize"
                                     style={{ fontSize: '1.6rem', padding: '10px 20px' }}
+                                    onClick={() => {
+                                        // Your export PDF functionality here
+                                    }}
                                 >
                                     <MDBIcon far icon="file-pdf" className="me-2" />
                                     Export
@@ -53,23 +112,20 @@ export default function App() {
                     <MDBContainer className="text-center">
                         <MDBIcon fab icon="mdb" size="4x" className="mb-2" style={{ color: '#5d9fc5' }} />
                         <p className="mb-4" style={{ fontSize: '2.6rem' }}>
-                            Thank for your purchase
+                            Thank you for your purchase
                         </p>
                     </MDBContainer>
                     <MDBRow>
                         <MDBCol xl="8">
                             <MDBTypography listUnStyled>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
-                                    To: <span style={{ color: '#5d9fc5' }}>John Lorem</span>
+                                    To: <span style={{ color: '#5d9fc5' }}>{selectedOrder.data.name}</span>
                                 </li>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
-                                    Street, City
+                                    {selectedOrder.data.Customer?.address}
                                 </li>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
-                                    State, Country
-                                </li>
-                                <li className="text-muted" style={{ fontSize: '1.6rem' }}>
-                                    <MDBIcon fas icon="phone-alt" /> 123-456-789
+                                    <MDBIcon fas icon="phone-alt" /> {selectedOrder.data.phone}
                                 </li>
                             </MDBTypography>
                         </MDBCol>
@@ -80,16 +136,19 @@ export default function App() {
                             <MDBTypography listUnStyled>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
                                     <MDBIcon fas icon="circle" style={{ color: '#84B0CA' }} />
-                                    <span className="fw-bold ms-1">ID:</span>#123-456
+                                    <span className="fw-bold ms-1">ID:</span>#{selectedOrder.data.id}
                                 </li>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
                                     <MDBIcon fas icon="circle" style={{ color: '#84B0CA' }} />
-                                    <span className="fw-bold ms-1">Creation Date: </span>Jun 23, 2021
+                                    <span className="fw-bold ms-1">Creation Date:</span>{' '}
+                                    {formatOrderDate(selectedOrder.data.createdAt)}
                                 </li>
                                 <li className="text-muted" style={{ fontSize: '1.6rem' }}>
                                     <MDBIcon fas icon="circle" style={{ color: '#84B0CA' }} />
-                                    <span className="fw-bold ms-1">Status:</span>
-                                    <span className="badge bg-warning text-black fw-bold ms-1">Unpaid</span>
+                                    <span className="fw-bold ms-1">Status:</span>{' '}
+                                    <span className="badge bg-warning text-black fw-bold ms-1">
+                                        {selectedOrder.data.status}
+                                    </span>
                                 </li>
                             </MDBTypography>
                         </MDBCol>
@@ -102,34 +161,22 @@ export default function App() {
                             >
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Shoe Name</th>
                                     <th scope="col">Qty</th>
                                     <th scope="col">Unit Price</th>
                                     <th scope="col">Amount</th>
                                 </tr>
                             </MDBTableHead>
                             <MDBTableBody style={{ fontSize: '1.6rem' }}>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Pro Package</td>
-                                    <td>4</td>
-                                    <td>$200</td>
-                                    <td>$800</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Web hosting</td>
-                                    <td>1</td>
-                                    <td>$10</td>
-                                    <td>$10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Consulting</td>
-                                    <td>1 year</td>
-                                    <td>$300</td>
-                                    <td>$300</td>
-                                </tr>
+                                {orderDetail.map((detail, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{detail.Shoes?.product_name}</td>
+                                        <td>{detail.quantity}</td>
+                                        <td>{formatPrice(detail.price)}</td>
+                                        <td>{formatPrice(detail.price * detail.quantity)}</td>
+                                    </tr>
+                                ))}
                             </MDBTableBody>
                         </MDBTable>
                     </MDBRow>
@@ -142,15 +189,19 @@ export default function App() {
                         <MDBCol xl="4">
                             <MDBTypography listUnStyled>
                                 <li className="text-muted ms-3" style={{ fontSize: '1.6rem' }}>
-                                    <span className="text-black me-4">SubTotal</span>$1110
+                                    <span className="text-black me-4">SubTotal</span>
+                                    {formatPrice(selectedOrder.data.total_amount)}
                                 </li>
                                 <li className="text-muted ms-3 mt-2" style={{ fontSize: '1.6rem' }}>
-                                    <span className="text-black me-4">Tax(15%)</span>$111
+                                    <span className="text-black me-4">Tax (15%)</span>
+                                    {formatPrice(selectedOrder.data.total_amount * 0.15)}
                                 </li>
                             </MDBTypography>
                             <p className="text-black float-end" style={{ fontSize: '1.6rem' }}>
                                 <span className="text-black me-3">Total Amount</span>
-                                <span style={{ fontSize: '25px' }}>$1221</span>
+                                <span style={{ fontSize: '25px' }}>
+                                    {formatPrice(selectedOrder.data.total_amount * 1.15)}
+                                </span>
                             </p>
                         </MDBCol>
                     </MDBRow>
@@ -172,4 +223,6 @@ export default function App() {
             </MDBCard>
         </MDBContainer>
     );
-}
+};
+
+export default PrintInvoice;

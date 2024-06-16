@@ -70,6 +70,7 @@ const publicRoutes = [
     {
         path: config.routes.invoice,
         component: Invoice,
+        layout: null,
     },
 
     //
